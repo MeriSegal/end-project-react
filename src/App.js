@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import HomePage from './pages/HomePage';
@@ -37,7 +38,7 @@ class App extends React.Component {
             <Route exact path="/patients">
               <NutritPntListPage/>  
             </Route>  
-            <Route exact path="/nptr">
+            <Route exact path="/nptr/:id">
               <NutritPntTracPage/>  
             </Route>  
             <Route exact path="/content">
