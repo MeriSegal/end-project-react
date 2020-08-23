@@ -11,17 +11,37 @@ import NutritContentPage from './pages/Nutrit/NutritContentPage';
 import PntBmiPage from './pages/Patient/PntBmiPage';
 import PntQandAPage from './pages/Patient/PntQandAPage';
 import PntTrackingPage from './pages/Patient/PntTrackingPage';
+import Parse from 'parse';
+
+Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+Parse.initialize(
+  'Y2L3RiP8eXAs3YBIIJ6z8g18McHTHCxC9W8MIf0X', // This is your Application ID
+  'wZU5JqoFlUizsekgXZ2KgHXMADWKvylpto4xER53' // This is your Javascript key
+);
 
 
 class App extends React.Component {
 
   constructor(props) {
-    super(props);
-  
-}  
+
+      super(props);
+
+      this.state = {
+        activeUser: null
+      }    
+  }
+
+  handleLogin = (activeUser)=> {
+    this.setState({
+      activeUser: activeUser
+    })
+  }
 
 
-  render() {   
+
+  render() { 
+    const { activeUser } = this.state;
+      
     return (
       <div className="App">
        <HashRouter>
@@ -30,7 +50,7 @@ class App extends React.Component {
               <HomePage/>
             </Route>
             <Route exact path="/login">
-              <LoginPage />
+              <LoginPage activeUser={activeUser} handleLogin={this.handleLogin}/>
             </Route> 
             <Route exact path="/signup">
               <PntSighUpPage/>  
