@@ -56,7 +56,7 @@ class LoginPage extends Component {
 
         return (
             <div>
-                 <h1>Login</h1>
+                <h1>Login</h1>
                 or <a href="#/signup">create a new account</a>
                 <Form>
                     {showInvalidCredentials ? <Alert variant="danger">

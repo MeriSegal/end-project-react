@@ -4,7 +4,7 @@ import './App.css';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import PntSighUpPage from './pages/Patient/PntSighUpPage';
+import PntSignUpPage from './pages/Patient/PntSignUpPage';
 import NutritPntListPage from './pages/Nutrit/NutritPntListPage';
 import NutritPntTracPage from './pages/Nutrit/NutritPntTracPage';
 import NutritContentPage from './pages/Nutrit/NutritContentPage';
@@ -41,7 +41,7 @@ class App extends React.Component {
 
   render() { 
     const { activeUser } = this.state;
-      
+
     return (
       <div className="App">
        <HashRouter>
@@ -53,7 +53,7 @@ class App extends React.Component {
               <LoginPage activeUser={activeUser} handleLogin={this.handleLogin}/>
             </Route> 
             <Route exact path="/signup">
-              <PntSighUpPage/>  
+              <PntSignUpPage handleLogin={this.handleLogin}/>  
             </Route>
             <Route exact path="/patients">
               <NutritPntListPage/>  
