@@ -14,7 +14,12 @@ class NutritPntListPage extends Component {
     }
 
     render() {
+        const { activeUser, handleLogout } = this.props;
 
+        if (!activeUser) {
+            return <Redirect to="/" />
+        }
+        
         if (this.state.id !== -1) {
             const redirectPath = `/nptr/${this.state.id}`
             return <Redirect to={redirectPath}/>
@@ -22,7 +27,7 @@ class NutritPntListPage extends Component {
 
         return (
             <div>
-                <NutritNavBar/>
+                <NutritNavBar handleLogout={handleLogout} />
                 <Button onClick={()=>this.setState({id: 1})}>temp go to 1 patient View</Button>
                 Nutrit Pnt List Page
             </div>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PntNavBar from '../../components/PntNavBar';
+import { Redirect } from 'react-router-dom';
+
 
 class PntQandAPage extends Component {
 
@@ -9,11 +11,17 @@ class PntQandAPage extends Component {
         this.state = {
         }    
     }
-    
+
     render() {
+        const { activeUser, handleLogout } = this.props;
+
+        if (!activeUser) {
+            return <Redirect to="/" />
+        }
+        
         return (
             <div>
-                <PntNavBar/>
+                <PntNavBar handleLogout={handleLogout}/>
                 Pnt QandA Page
             </div>
         );

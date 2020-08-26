@@ -37,6 +37,11 @@ class App extends React.Component {
     })
   }
 
+  handleLogout =()=> {
+    this.setState({
+      activeUser: null
+    })
+  }
 
 
   render() { 
@@ -50,28 +55,28 @@ class App extends React.Component {
               <HomePage/>
             </Route>
             <Route exact path="/login">
-              <LoginPage activeUser={activeUser} handleLogin={this.handleLogin}/>
+              <LoginPage handleLogin={this.handleLogin}/>
             </Route> 
             <Route exact path="/signup">
               <PntSignUpPage handleLogin={this.handleLogin}/>  
             </Route>
             <Route exact path="/patients">
-              <NutritPntListPage/>  
+              <NutritPntListPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>  
             <Route exact path="/nptr/:id">
-              <NutritPntTracPage/>  
+              <NutritPntTracPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>  
             <Route exact path="/content">
-              <NutritContentPage/>  
+              <NutritContentPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>  
             <Route exact path="/bmi">
-              <PntBmiPage/>  
+              <PntBmiPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>  
             <Route exact path="/chat">
-              <PntQandAPage/>  
+              <PntQandAPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>  
             <Route exact path="/ptr">
-              <PntTrackingPage/>  
+              <PntTrackingPage activeUser={activeUser} handleLogout={this.handleLogout}/>  
             </Route>
           </Switch>
         </HashRouter>

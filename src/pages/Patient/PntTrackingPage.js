@@ -3,6 +3,7 @@ import PntNavBar from '../../components/PntNavBar';
 import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
+import { Redirect } from 'react-router-dom';
 
 
 class PntTrackingPage extends Component {
@@ -23,7 +24,6 @@ class PntTrackingPage extends Component {
         console.log(value && value.format(this.format));
     }
 
-
    
     foodSelect = (event)=>{
         this.setState(
@@ -38,7 +38,12 @@ class PntTrackingPage extends Component {
     }
 
     render() {
-      
+        const {activeUser, handleLogout} = this.props;
+
+        if (!activeUser) {
+            return <Redirect to="/" />
+        }
+
         const timePicker = <TimePicker
                             showSecond={false}
                             defaultValue={moment()}
@@ -66,8 +71,8 @@ class PntTrackingPage extends Component {
 
         return (
             <div>
-                <PntNavBar/>
-                Pnt Tracking Page
+                <PntNavBar handleLogout={handleLogout}/>
+                Pnt Tracking Page {activeUser.fname}
                 <br/>
                 {timePicker}
                 <br/>
@@ -76,7 +81,7 @@ class PntTrackingPage extends Component {
                 <select onClick={this.foodSelect}>
                     {options}         
                 </select>
-                <p>{this.state.food}</p>
+                 <p>{this.state.food}</p>
 
             </div>
         );
