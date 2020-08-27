@@ -6,6 +6,8 @@ import moment from 'moment';
 import { Redirect } from 'react-router-dom';
 import FoodModel from '../../model/FoodModel';
 import Parse from 'parse';
+import SymptomModel from '../../model/SymptomModel';
+import { Button } from 'react-bootstrap';
 
 
 class PntTrackingPage extends Component {
@@ -16,9 +18,13 @@ class PntTrackingPage extends Component {
         this.format = 'h:mm a';
 
         this.state = {
-            food: "",
+            date: moment().format("DD-MM-YYYY"),
+            food: "",            
             foodInput: "",
-            foodList: []
+            foodList: [],
+            symptom: "",
+            symptomInput: "",
+            symptomList: []
         }    
     }
     
@@ -34,9 +40,21 @@ class PntTrackingPage extends Component {
         )
     }
 
-    changeHandler = (event) => {
+    changeFood = (event) => {
         this.setState(
             {foodInput: event.target.value}
+        );
+    }
+
+    symptomSelect = (event)=>{
+        this.setState(
+            {symptom : event.target.value}
+        )
+    }
+
+    changeSymptom = (event) => {
+        this.setState(
+            {symptomInput: event.target.value}
         );
     }
 
@@ -50,6 +68,15 @@ class PntTrackingPage extends Component {
         const allFood = results.map(result => new FoodModel(result));
         this.setState({
             foodList: allFood
+        });
+
+
+        const SymptomList = Parse.Object.extend('SymptomList');
+        const Squery = new Parse.Query(SymptomList);
+        const Sresults = await Squery.find();
+        const symptoms = Sresults.map(result => new SymptomModel(result));
+        this.setState({
+            symptomList: symptoms
         });
     }
 
@@ -74,23 +101,45 @@ class PntTrackingPage extends Component {
 
     
 
-        const options = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
+        const foodOptions = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
                                 .includes((this.state.foodInput).toLowerCase()))
                                 .map(foodfilter => <option value= {foodfilter.foods} >{foodfilter.foodName}</option>);
+
+
+        const symptomOptions = this.state.symptomList.filter(symptoms => (symptoms.symptomName).toLowerCase()
+                                .includes((this.state.symptomInput).toLowerCase()))
+                                .map(symptomfilter => <option value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
 
         return (
             <div>
                 <PntNavBar handleLogout={handleLogout}/>
                 Pnt Tracking Page {activeUser.fname}
                 <br/>
+                <h1> date: {this.state.date}</h1>
+                <p>when did you eat? </p>
                 {timePicker}
                 <br/>
-                <input type='text' onChange={this.changeHandler} />
+                <input type='text' onChange={this.changeFood} />
                  <br/>
                 <select onClick={this.foodSelect}>
-                    {options}         
+                    {foodOptions}         
                 </select>
                  <p>{this.state.food}</p>
+                 <Button variant="primary" size="lg" onClick={this.addTrFood} block variant="success">Add food </Button>
+
+
+
+                 <p>when did you feel symptoms? </p>
+                {timePicker}
+                <br/>
+                <input type='text' onChange={this.changeSymptom} />
+                 <br/>
+                <select onClick={this.symptomSelect}>
+                    {symptomOptions}         
+                </select>
+                 <p>{this.state.symptom}</p>
+                 <Button variant="primary" size="lg" onClick={this.addTrSymptom} block variant="success">Add symptom </Button>
+
 
             </div>
         );
