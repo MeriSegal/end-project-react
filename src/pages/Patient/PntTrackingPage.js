@@ -18,21 +18,30 @@ class PntTrackingPage extends Component {
         this.format = 'h:mm a';
 
         this.state = {
-            date: moment().format("DD-MM-YYYY"),
-            food: "",            
+            theDate: moment().format("DD-MM-YYYY"),
+            food: "", 
+            eatTime: moment().format("h:mm a"),           
             foodInput: "",
             foodList: [],
             symptom: "",
+            symptomTime: moment().format("h:mm a"),
             symptomInput: "",
             symptomList: []
         }    
     }
     
 
-    onTimeChange = (value)=> {
-        console.log(value && value.format(this.format));
+    eatTimeChange = (value)=> {
+        this.setState(
+            {eatTime: value.format(this.format)}
+        );
     }
 
+    sympTimeChange = (value)=> {
+        this.setState(
+            {symptomTime: value.format(this.format)}
+        );
+    }
    
     foodSelect = (event)=>{
         this.setState(
@@ -58,6 +67,49 @@ class PntTrackingPage extends Component {
         );
     }
 
+    addTrkFood = () => {
+
+        const {food, eatTime, theDate} = this.state;
+
+        const FoodTracking = Parse.Object.extend('FoodTracking');
+        const myNewObject = new FoodTracking();
+
+        myNewObject.set('date', theDate);
+        myNewObject.set('time', eatTime);
+        myNewObject.set('foodName', food);
+        myNewObject.set('calories', 1);
+        myNewObject.set('userId', Parse.User.current());
+
+        myNewObject.save().then(
+        (result) => {
+            console.log('FoodTracking created', result);
+        },
+        (error) => {
+            console.error('Error while creating FoodTracking: ', error);
+        }
+        );
+    }
+
+    addTrkSymptom = () => {
+        const {symptom, symptomTime, theDate} = this.state;
+
+        const SymptomTracking = Parse.Object.extend('SymptomTracking');
+        const myNewObject = new SymptomTracking();
+
+        myNewObject.set('date', theDate);
+        myNewObject.set('time', symptomTime);
+        myNewObject.set('symptom', symptom);
+        myNewObject.set('userId', Parse.User.current());
+
+        myNewObject.save().then(
+        (result) => {
+            console.log('SymptomTracking created', result);
+        },
+        (error) => {
+            console.error('Error while creating SymptomTracking: ', error);
+        }
+        );
+    }
 
     async componentDidMount() {
 
@@ -89,16 +141,11 @@ class PntTrackingPage extends Component {
             return <Redirect to="/" />
         }
 
-        const timePicker = <TimePicker
-                            showSecond={false}
-                            defaultValue={moment()}
-                            className="xxx"
-                            onChange={this.onTimeChange}
-                            format={this.format}
-                            use12Hours
-                            inputReadOnly
-                        />
+        const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx"
+                            onChange={this.eatTimeChange} format={this.format} use12Hours inputReadOnly/>
 
+        const sympTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx"
+                                onChange={this.sympTimeChange} format={this.format} use12Hours inputReadOnly />
     
 
         const foodOptions = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
@@ -112,12 +159,14 @@ class PntTrackingPage extends Component {
 
         return (
             <div>
-                <PntNavBar handleLogout={handleLogout}/>
+                <PntNavBar handleLogout={handleLogout}/>                
                 Pnt Tracking Page {activeUser.fname}
                 <br/>
-                <h1> date: {this.state.date}</h1>
+                <h1> date: {this.state.theDate}</h1>
+
+                <br/>
                 <p>when did you eat? </p>
-                {timePicker}
+                    {eatTimePicker}
                 <br/>
                 <input type='text' onChange={this.changeFood} />
                  <br/>
@@ -125,12 +174,12 @@ class PntTrackingPage extends Component {
                     {foodOptions}         
                 </select>
                  <p>{this.state.food}</p>
-                 <Button variant="primary" size="lg" onClick={this.addTrFood} block variant="success">Add food </Button>
+                 <Button variant="primary" size="lg" onClick={this.addTrkFood} block variant="success">Add food </Button>
 
 
-
+                 <br/>
                  <p>when did you feel symptoms? </p>
-                {timePicker}
+                    {sympTimePicker}
                 <br/>
                 <input type='text' onChange={this.changeSymptom} />
                  <br/>
@@ -138,7 +187,7 @@ class PntTrackingPage extends Component {
                     {symptomOptions}         
                 </select>
                  <p>{this.state.symptom}</p>
-                 <Button variant="primary" size="lg" onClick={this.addTrSymptom} block variant="success">Add symptom </Button>
+                 <Button variant="primary" size="lg" onClick={this.addTrkSymptom} block variant="success">Add symptom </Button>
 
 
             </div>
