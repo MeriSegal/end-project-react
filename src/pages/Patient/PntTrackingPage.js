@@ -4,6 +4,8 @@ import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
+import FoodModel from '../../model/FoodModel';
+import Parse from 'parse';
 
 
 class PntTrackingPage extends Component {
@@ -15,7 +17,8 @@ class PntTrackingPage extends Component {
 
         this.state = {
             food: "",
-            foodInput: ""
+            foodInput: "",
+            foodList: []
         }    
     }
     
@@ -37,6 +40,21 @@ class PntTrackingPage extends Component {
         );
     }
 
+
+    async componentDidMount() {
+
+        const FoodDisplay = Parse.Object.extend('FoodDisplay');
+        const query = new Parse.Query(FoodDisplay);
+        query.equalTo("hide", false);
+        const results = await query.find();
+        const allFood = results.map(result => new FoodModel(result));
+        this.setState({
+            foodList: allFood
+        });
+    }
+
+
+
     render() {
         const {activeUser, handleLogout} = this.props;
 
@@ -54,18 +72,9 @@ class PntTrackingPage extends Component {
                             inputReadOnly
                         />
 
-        // temp list:
-        const foodList =[
-            {foodName: "bread toast"},
-            {foodName: "chese"},
-            {foodName: " light creame chese "},
-            {foodName: " light dark bran bread "},
-            {foodName: " light dark bread "},
-            {foodName: "butter"},
-            {foodName: "eggplant"}
-            ]; 
+    
 
-        const options = foodList.filter(foods => (foods.foodName).toLowerCase()
+        const options = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
                                 .includes((this.state.foodInput).toLowerCase()))
                                 .map(foodfilter => <option value= {foodfilter.foods} >{foodfilter.foodName}</option>);
 

@@ -28,14 +28,15 @@ class PntSignUpPage extends Component {
 
         const user = new Parse.User
 
+        user.set('username',  fnameInput+" "+lnameInput);
+        user.set('email', emailInput);
         user.set('fname', fnameInput);
         user.set('lname', lnameInput);
-        user.set('username', fnameInput+" "+lnameInput);
-        user.set('email', emailInput);
-        user.set('password', pwdInput);
         user.set('birthday', birthdayInput);
         user.set('height', Number(heightInput));
         user.set('weight', Number(weightInput));
+        user.set('isnutrit', false);
+        user.set('password', pwdInput);
         
 
         user.signUp().then((user) => {

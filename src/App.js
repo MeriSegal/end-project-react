@@ -15,8 +15,8 @@ import Parse from 'parse';
 
 Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
 Parse.initialize(
-  'Y2L3RiP8eXAs3YBIIJ6z8g18McHTHCxC9W8MIf0X', // This is your Application ID
-  'wZU5JqoFlUizsekgXZ2KgHXMADWKvylpto4xER53' // This is your Javascript key
+  'radc71oZRPB1K3RmLNLsQEudRgyRog2XlojqQhBY', // This is your Application ID
+  'oGSvQBOeOrb3Zx4a5SyVBul46u6Ic3KnUG6AAGsx' // This is your Javascript key 
 );
 
 
