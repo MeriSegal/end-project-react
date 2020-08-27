@@ -7,7 +7,7 @@ class UserModel{
         this.lname = parseUser.get("lname");
         this.email = parseUser.get("email");
         this.birthday = parseUser.get("birthday");
-        this.height = parseUser.get("height");
+        this.height = parseUser.get("height")/100;
         this.weight = parseUser.get("weight");    
         this.isnutrit = parseUser.get("isnutrit");     
     }

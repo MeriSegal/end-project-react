@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PntNavBar from '../../components/PntNavBar';
 import { Redirect } from 'react-router-dom';
+import BmiView from '../../components/BmiView';
 
 class PntBmiPage extends Component {
 
@@ -20,8 +21,10 @@ class PntBmiPage extends Component {
 
         return (
             <div>
-                <PntNavBar handleLogout={handleLogout}/>
+               <PntNavBar handleLogout={handleLogout}/>
                Pnt Bmi Page 
+               <BmiView activeUser={activeUser}/>
+
             </div>
         );
     }
