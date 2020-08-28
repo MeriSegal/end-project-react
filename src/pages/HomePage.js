@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import './HomePage.css'
+import CarouselView from '../components/CarouselView';
+
 
 class HomePage extends Component {
 
@@ -18,6 +21,9 @@ class HomePage extends Component {
               <Button variant="primary" size="lg" href="#/signup">Sighn up</Button>
               <br/> <br/>
               <Button variant="primary" size="lg" href="#/login">Login</Button>
+              <div className="carousel-contaner">
+                <CarouselView/>
+              </div>
             </div>
         );
     }
