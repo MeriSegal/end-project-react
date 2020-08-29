@@ -3,6 +3,7 @@ import { Button, Form, Alert, Col, Row } from 'react-bootstrap';
 import Parse from 'parse';
 import UserModel from '../model/UserModel';
 import { Redirect } from 'react-router-dom';
+import './form.css'
 
 
 class LoginPage extends Component {
@@ -11,7 +12,7 @@ class LoginPage extends Component {
         super(props);
     
         this.state = {
-            emailInput: "lee@lee.com",
+            emailInput: "nur@nur.com",
             pwdInput: "1234",
             showInvalidCredentials: false,
             redirectToPnt: false,
@@ -56,8 +57,8 @@ class LoginPage extends Component {
 
         return (
             <div>
-                <h1>Login</h1>
-                or <a href="#/signup">create a new account</a>
+               <h1 className="from-title">Login:</h1>
+               <p> or <a href="#/signup">create a new account</a> </p>
                 <Form>
                     {showInvalidCredentials ? <Alert variant="danger">
                         Invalid Credientails! Incorrect email or password

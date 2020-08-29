@@ -3,6 +3,7 @@ import { Button, Form, Col, Row} from 'react-bootstrap';
 import Parse from 'parse';
 import { Redirect } from 'react-router-dom';
 import UserModel from '../../model/UserModel';
+import '../form.css'
 
 
 class PntSignUpPage extends Component {
@@ -60,7 +61,7 @@ class PntSignUpPage extends Component {
        
         return (
             <div>
-                <h1>Sign up</h1>
+                <h1 className="from-title">Sign Up:</h1>
                 
                 <Form> 
                     <Form.Group as={Row} controlId="formHorizontalEmail">

@@ -65,7 +65,7 @@ class NutritContentPage extends Component {
             <div>
                 <NutritNavBar handleLogout={handleLogout} />
 
-               <h1>Add Content to the home Page</h1>
+               <h1 className="from-title">Add Content to the home Page</h1>
                 
                 <Form> 
                     <Form.Group as={Row} controlId="title">

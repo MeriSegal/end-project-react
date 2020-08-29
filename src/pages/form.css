@@ -1,0 +1,25 @@
+
+form{
+    color: rgb(216, 208, 216);
+    text-shadow: 1px 1px 2px black, 0 0 25px rgb(12, 49, 28), 0 0 5px rgb(39, 87, 57);
+    font-size: x-large;
+    font-weight: bold;
+    padding-right: 10%;
+    padding-left: 10%;    
+}
+
+.form-control{
+    border: solid  rgb(50, 112, 74);
+    height: 50px;
+}
+
+.form-group> .btn{
+    margin-top: 50px;
+}
+
+.from-title{
+    padding: 30px;
+    font-style: italic;
+    color: rgb(42, 38, 105);
+    text-shadow: 2px 2px 5px rgb(50, 112, 74);  
+}
