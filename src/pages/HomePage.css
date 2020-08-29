@@ -2,14 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Srisakdi:wght@700&display=swap');
 
 
-.home{  
-    background-image: url("https://storage.needpix.com/rsynced_images/sunrise-438339_1280.jpg");
-    background-position-x: right;
-    background-size: cover;
-    background-color: #9ddb9d; 
-    padding: 10px;
-}
-
 .carousel-contaner{
     border: solid rgb(42, 38, 105);
     border-radius: 5px;
