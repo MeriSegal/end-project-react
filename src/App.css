@@ -8,6 +8,22 @@
   background-position-x: right;
   background-size: cover;
   background-color: #9ddb9d; 
-  padding: 10px;
+  padding-bottom: 10px;
 }
 
+.navbar{
+  background: rgba(188, 250, 108, 0.603);
+}
+
+.navbar-brand{
+  font-family: 'Srisakdi', cursive;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgb(50, 112, 74);
+}
+
+.nav-link{
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgb(96, 163, 122);
+
+}

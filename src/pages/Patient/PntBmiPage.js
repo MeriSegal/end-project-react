@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PntNavBar from '../../components/PntNavBar';
 import { Redirect } from 'react-router-dom';
 import BmiView from '../../components/BmiView';
+import { Form , Col, Row, Button } from 'react-bootstrap';
+import './PntBmiPage.css'
 
 class PntBmiPage extends Component {
 
@@ -9,11 +11,17 @@ class PntBmiPage extends Component {
         super(props);
     
         this.state = {
+            weightInput: this.props.activeUser.weight,
         }    
+    }
+
+    updateWeight = () =>{
+
     }
 
     render() {
         const { activeUser, handleLogout } = this.props;
+        const { weightInput} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
@@ -22,8 +30,21 @@ class PntBmiPage extends Component {
         return (
             <div>
                <PntNavBar handleLogout={handleLogout}/>
-               Pnt Bmi Page 
-               <BmiView activeUser={activeUser}/>
+               <Form className="bmi-form">
+                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                        <Form.Label column sm={4}>
+                           Weight
+                        </Form.Label>
+                        <Col sm={8}>
+                            <Form.Control type="number" min="40" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
+                    </Form.Group>
+               </Form>
+               <BmiView className="bmi-view" activeUser={activeUser}/>
 
             </div>
         );

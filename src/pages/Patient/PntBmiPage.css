@@ -1,0 +1,15 @@
+
+
+.bmi-form{
+    margin-top: 50px;          
+}
+
+@media screen and (min-width: 901px) {
+
+    .bmi-form{
+        float: left;
+        margin-top: 150px;          
+    }
+
+   
+}
