@@ -1,54 +1,61 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
+import HomeConModel from '../model/HomeConModel';
+import Parse from 'parse';
 
 
 
 class CarouselView extends Component {
 
-  
+    constructor(props) {
+        super(props);
 
+        this.state = {           
+            nutritContent: []
+        }
+    }
+  
+    async componentDidMount() {
+       
+        const HomeContent = Parse.Object.extend('HomeContent');
+        const query = new Parse.Query(HomeContent);
+        const results = await query.find();
+        const nutContent = results.map(result => new HomeConModel(result));
+        this.setState({
+            nutritContent: nutContent
+        });
+        
+    }
 
 
   render() {
+    const { nutritContent } = this.state;
+
+
+    const caruoselItem = nutritContent.map(item => 
+                        <Carousel.Item>
+                                <br/>                                  
+                                <h3>{item.title}</h3>
+                                <p>{item.sub}</p>  
+                            <Carousel.Caption>                               
+                                <p>{item.content}</p>
+                            </Carousel.Caption>
+                            <img
+                                className="d-block w-100"
+                                src={item.img}
+                                alt="image"
+                            />
+                        </Carousel.Item>)
 
 
     return (
       <div>
-        <Carousel>
-            <Carousel.Item> 
-                    <br/>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>  
-                <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                  
-                </Carousel.Caption>
-                <img
-                    className="d-block w-100"
-                    src="https://picsum.photos/500/300?img=1"
-                    alt="First slide"
-                />
-            </Carousel.Item>
+        <Carousel>           
+
+            {caruoselItem}           
 
             <Carousel.Item> 
-                    <br/>
-                    <h3>Second slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>  
-                <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                  
-                </Carousel.Caption>
-                <img
-                    className="d-block w-100"
-                    src="https://picsum.photos/500/300?img=2"
-                    alt="First slide"
-                />
-            </Carousel.Item>
-
-            <Carousel.Item> 
-                    <br/>
+                    <br/>                   
                     <h3>Fennel Health Benefits</h3>
                     <p>According to the USDA National Nutrient Database for Standard Reference.</p>  
                 <Carousel.Caption>
