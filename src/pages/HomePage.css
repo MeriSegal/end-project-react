@@ -1,0 +1,98 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Srisakdi:wght@700&display=swap');
+
+
+.home{  
+    background-image: url("https://storage.needpix.com/rsynced_images/sunrise-438339_1280.jpg");
+    background-position-x: right;
+    background-size: cover;
+    background-color: #9ddb9d; 
+    padding: 10px;
+}
+
+.carousel-contaner{
+    border: solid rgb(42, 38, 105);
+    border-radius: 5px;
+    margin: 50px;
+    max-width: 750px;
+    background-color: rgba(136, 196, 163, 0.822);
+}
+
+.item-title{
+    min-height: 150px;
+    color:rgb(42, 38, 105);
+    padding: 10px;
+}
+
+img{
+    min-height: 400px;
+    max-height: 470px;
+ }
+
+.btn-con> .btn{
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 120px;
+}
+
+.btn{   
+    background-color: rgb(80, 136, 136);
+}
+
+.title{
+    font-family: 'Srisakdi', cursive;
+    padding-bottom: 40px;
+}
+
+.title> h1{
+    font-style: italic;
+    font-size: 80px;
+    padding: 20px;
+    text-shadow: 2px 2px 5px rgb(50, 112, 74);
+}
+
+.nutrit{
+    padding-bottom: 40px;
+    font-style: italic;
+    color: rgb(42, 38, 105);
+    text-shadow: 2px 2px 5px rgb(50, 112, 74);
+
+}
+
+@media screen and (min-width: 901px) {
+
+    .home{
+        direction: rtl;     
+    }
+
+    .title{
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .nutrit{
+        float: right;
+        margin-left: 20%;
+        margin-right: 10%;
+        margin-top: 20px;
+    }
+
+    .btn-con{
+        float: left;
+        margin-left: 20%;
+        margin-right: 10%;
+    }
+
+    .btn-con> .btn{
+        display: block;
+        margin: 50px;
+        width: 220px;
+
+    }
+    .carousel-contaner{
+        min-width: 340px;
+        clear: right;
+        overflow: auto; 
+        margin-right: 10%;
+    }
+}

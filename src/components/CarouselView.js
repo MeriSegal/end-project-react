@@ -34,9 +34,11 @@ class CarouselView extends Component {
 
     const caruoselItem = nutritContent.map(item => 
                         <Carousel.Item>
+                            <div className="item-title">                                                            
                                 <br/>                                  
                                 <h3>{item.title}</h3>
-                                <p>{item.sub}</p>  
+                                <p>{item.sub}</p> 
+                            </div> 
                             <Carousel.Caption>                               
                                 <p>{item.content}</p>
                             </Carousel.Caption>
@@ -50,14 +52,16 @@ class CarouselView extends Component {
 
     return (
       <div>
-        <Carousel>           
+        <Carousel>          
 
-            {caruoselItem}           
+            {caruoselItem}          
 
             <Carousel.Item> 
+                <div className="item-title">
                     <br/>                   
-                    <h3>Fennel Health Benefits</h3>
-                    <p>According to the USDA National Nutrient Database for Standard Reference.</p>  
+                    <h3>Health Benefits of Fennel</h3>
+                    <p>According to the USDA National Nutrient Database for Standard Reference:</p>  
+                </div>
                 <Carousel.Caption>
                     <p>The health benefits of fennel are many and include relief from anemia, indigestion, flatulence, constipation, colic, diarrhea, respiratory disorders, and menstrual disorders. It also aids in eye care. Fennel, which has the scientific name Foeniculum vulgare miller, or its essence, is widely used around the world in mouth fresheners, toothpaste, desserts, antacids, and in various culinary applications.</p>                  
                 </Carousel.Caption>

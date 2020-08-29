@@ -15,12 +15,19 @@ class HomePage extends Component {
     
     render() {
         return (
-            <div>
-              <h1>Every day</h1>  
-              <h3>Is a new day</h3>
-              <Button variant="primary" size="lg" href="#/signup">Sighn up</Button>
-              <br/> <br/>
-              <Button variant="primary" size="lg" href="#/login">Login</Button>
+            <div className="home">
+              <div className="title">
+                <h1>Every day</h1>  
+                <h3>Is a new day</h3>
+              </div>
+              <div className="nutrit">
+                <h2>Nurit Ron - Nutritionist </h2>
+                <h2>054-3212345</h2>
+              </div>
+              <div className="btn-con">
+                <Button variant="primary" size="lg" href="#/signup">Sighn up</Button>              
+                <Button variant="primary" size="lg" href="#/login">Login</Button>
+              </div> 
               <div className="carousel-contaner">
                 <CarouselView/>
               </div>
