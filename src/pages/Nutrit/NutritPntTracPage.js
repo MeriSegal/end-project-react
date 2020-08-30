@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 
 class NutritPntTracPage extends Component {
 
@@ -20,11 +21,18 @@ class NutritPntTracPage extends Component {
     }
 
     render() {
-        
+        const {pntId} = this.state;
+
+        if (pntId === -1) {
+            const redirectPath = `/patients`
+            return <Redirect to={redirectPath}/>
+        }
 
         return (
             <div>
                 Nutrit Pnt Track Page <h1>{this.state.pntId}</h1>
+                <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
+
             </div>
         );
     }

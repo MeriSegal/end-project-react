@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import NutritNavBar from '../../components/NutritNavBar';
-import { Button } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import Parse from 'parse';
+import UserModel from '../../model/UserModel';
 
 class NutritPntListPage extends Component {
 
@@ -9,27 +11,61 @@ class NutritPntListPage extends Component {
         super(props);
        
         this.state = {
-            id: -1
+            pntList: [],
+            pntId: -1
         }
     }
 
+    async componentDidMount() {
+       
+        const User = new Parse.User();
+        const query = new Parse.Query(User); 
+        query.equalTo("isnutrit", false);
+        const results = await query.find();
+        const patients = results.map(result => new UserModel(result));
+        this.setState({
+            pntList: patients
+        });
+        
+    }
+
+
+    viewPnt = (event)=>{
+        this.setState(
+            {pntId: event.target.value}
+        );
+    }
+
+
+
     render() {
         const { activeUser, handleLogout } = this.props;
+        const {pntList, pntId} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
         }
         
-        if (this.state.id !== -1) {
-            const redirectPath = `/nptr/${this.state.id}`
+        if (pntId !== -1) {
+            const redirectPath = `/nptr/${pntId}`
             return <Redirect to={redirectPath}/>
         }
 
+
+        const pnts = pntList.map(pnt => 
+            <ListGroup.Item action value={pnt.fname+" "+pnt.lname} onClick={this.viewPnt}>
+                {pnt.fname} {pnt.lname}
+            </ListGroup.Item>
+        )
+
         return (
-            <div>
+            <div >
                 <NutritNavBar handleLogout={handleLogout} />
-                <Button onClick={()=>this.setState({id: 1})}>temp go to 1 patient View</Button>
-                Nutrit Pnt List Page
+
+               <ListGroup>
+                   {pnts}                   
+               </ListGroup>
+               
             </div>
         );
     }
