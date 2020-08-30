@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from "react-router-dom";
 import { Button } from 'react-bootstrap';
+import BmiView from '../../components/BmiView';
 
 class NutritPntTracPage extends Component {
 
@@ -32,6 +33,7 @@ class NutritPntTracPage extends Component {
             <div>
                 Nutrit Pnt Track Page <h1>{pntId}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
+                <BmiView className="bmi-view" activeUser={pntId}/>
 
             </div>
         );

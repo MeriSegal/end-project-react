@@ -66,7 +66,7 @@ class NutritPntListPage extends Component {
             return <Redirect to="/" />
         }
         
-        if (pntId !== -1) {
+        if (pntId !== -1 && pntId !== undefined) {
             const redirectPath = `/nptr/${pntId}`
             return <Redirect to={redirectPath}/>
         }
