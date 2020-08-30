@@ -25,7 +25,7 @@ class HomePage extends Component {
                 <h2>054-3212345</h2>
               </div>
               <div className="btn-con">
-                <Button variant="primary" size="lg" href="#/signup">Sighn up</Button>              
+                <Button variant="primary" size="lg" href="#/signup">Sign up</Button>              
                 <Button variant="primary" size="lg" href="#/login">Login</Button>
               </div> 
               <div className="carousel-contaner">
