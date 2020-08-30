@@ -5,7 +5,9 @@ form{
     font-size: x-large;
     font-weight: bold;
     padding-right: 10%;
-    padding-left: 10%;    
+    padding-left: 10%;   
+    min-height: 1000px; 
+    margin-bottom: 10px;
 }
 
 .form-control{

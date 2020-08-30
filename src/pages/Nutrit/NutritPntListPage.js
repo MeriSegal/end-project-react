@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import NutritNavBar from '../../components/NutritNavBar';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 import Parse from 'parse';
 import UserModel from '../../model/UserModel';
+import './NutPntListPage.css'
 
 class NutritPntListPage extends Component {
 
@@ -12,30 +13,49 @@ class NutritPntListPage extends Component {
        
         this.state = {
             pntList: [],
-            pntId: -1
+            pntId: -1,          
         }
     }
 
     async componentDidMount() {
        
-        const User = new Parse.User();
-        const query = new Parse.Query(User); 
-        query.equalTo("isnutrit", false);
-        const results = await query.find();
-        const patients = results.map(result => new UserModel(result));
-        this.setState({
-            pntList: patients
-        });
+        {   
+            const User = new Parse.User();
+            const query = new Parse.Query(User); 
+            query.equalTo("isnutrit", false);
+            const results = await query.find();
+            const patients = results.map(result => new UserModel(result));
+            this.setState({
+                pntList: patients
+            });
+        }
+
+
+        {
+            const Message = Parse.Object.extend('Message');
+            const query = new Parse.Query(Message);
+            query.equalTo("isNutrit", false);
+            query.equalTo("isRead", false);
+            const results = await query.find();
+
+            results.map(result =>{
+                const newpntList = this.state.pntList.map(v => {
+                    return v.id == result.get("userId").id ? {...v, message: v.message+1} : {...v, message: v.message}
+                  })
+                this.setState({
+                    pntList: newpntList
+                })
+            
+            }); 
+        }
         
     }
-
 
     viewPnt = (event)=>{
         this.setState(
             {pntId: event.target.value}
-        );
+        );       
     }
-
 
 
     render() {
@@ -53,8 +73,9 @@ class NutritPntListPage extends Component {
 
 
         const pnts = pntList.map(pnt => 
-            <ListGroup.Item action value={pnt.fname+" "+pnt.lname} onClick={this.viewPnt}>
-                {pnt.fname} {pnt.lname}
+            <ListGroup.Item className="list-item" action value={pnt.fname+" "+pnt.lname} onClick={this.viewPnt}>
+                <Badge className="name-bbl"><h4>{pnt.fname} {pnt.lname}</h4></Badge>   phone: {pnt.phone}
+                <Badge className="babble"> <h5>{pnt.message==0? "":pnt.message +" new messages"} </h5></Badge>
             </ListGroup.Item>
         )
 
@@ -62,7 +83,7 @@ class NutritPntListPage extends Component {
             <div >
                 <NutritNavBar handleLogout={handleLogout} />
 
-               <ListGroup>
+               <ListGroup className="group">
                    {pnts}                   
                </ListGroup>
                

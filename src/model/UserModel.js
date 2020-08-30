@@ -6,10 +6,12 @@ class UserModel{
         this.fname = parseUser.get("fname");
         this.lname = parseUser.get("lname");
         this.email = parseUser.get("email");
+        this.phone = parseUser.get("phone");
         this.birthday = parseUser.get("birthday");
         this.height = parseUser.get("height")/100;
         this.weight = parseUser.get("weight");    
-        this.isnutrit = parseUser.get("isnutrit");     
+        this.isnutrit = parseUser.get("isnutrit");
+        this.message = 0;     
     }
     
 }

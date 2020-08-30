@@ -15,6 +15,7 @@ class PntSignUpPage extends Component {
             fnameInput: "",
             lnameInput: "",
             emailInput: "",
+            phoneInput: "",
             pwdInput: "",
             birthdayInput: "",
             heightInput: "",
@@ -24,13 +25,14 @@ class PntSignUpPage extends Component {
     }
 
     signUp = () =>{
-        const {fnameInput, lnameInput, emailInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
+        const {fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
         const { handleLogin } = this.props;
 
         const user = new Parse.User
 
         user.set('username',  fnameInput+" "+lnameInput);
         user.set('email', emailInput);
+        user.set('phone', phoneInput);
         user.set('fname', fnameInput);
         user.set('lname', lnameInput);
         user.set('birthday', birthdayInput);
@@ -53,7 +55,7 @@ class PntSignUpPage extends Component {
 
     render() {
 
-        const {redirectToPnt, fnameInput, lnameInput, emailInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
+        const {redirectToPnt, fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
         
         if (redirectToPnt) {
             return <Redirect to="/ptr" />
@@ -66,7 +68,7 @@ class PntSignUpPage extends Component {
                 <Form> 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Name
+                            Name:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="text" placeholder="Name" value={fnameInput} onChange={(e) => this.setState({fnameInput: e.target.value})}/>
@@ -75,7 +77,7 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Last Name
+                            Last Name:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="text" placeholder="Last name" value={lnameInput} onChange={(e) => this.setState({lnameInput: e.target.value})}/>
@@ -84,7 +86,16 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Email
+                            Phone:
+                        </Form.Label>
+                        <Col sm={10}>
+                            <Form.Control type="text" placeholder="Phone" value={phoneInput} onChange={(e) => this.setState({phoneInput: e.target.value})}/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                        <Form.Label column sm={2}>
+                            Email:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="email" placeholder="Email" value={emailInput} onChange={(e) => this.setState({emailInput: e.target.value})}/>
@@ -93,7 +104,7 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalPassword">
                         <Form.Label column sm={2}>
-                            Password
+                            Password:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="password" placeholder="Password" value={pwdInput} onChange={(e) => this.setState({pwdInput: e.target.value})}/>
@@ -102,7 +113,7 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Birthday
+                            Birthday:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="date" placeholder="Birthday" value={birthdayInput} onChange={(e) => this.setState({birthdayInput: e.target.value})}/>
@@ -111,7 +122,7 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Height
+                            Height:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="number" min="120" value={heightInput} onChange={(e) => this.setState({heightInput: e.target.value})}/>
@@ -120,7 +131,7 @@ class PntSignUpPage extends Component {
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>
-                            Weight
+                            Weight:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="number" min="40" value={weightInput} onChange={(e) => this.setState({weightInput: e.target.value})}/>

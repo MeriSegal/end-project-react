@@ -30,7 +30,7 @@ class NutritPntTracPage extends Component {
 
         return (
             <div>
-                Nutrit Pnt Track Page <h1>{this.state.pntId}</h1>
+                Nutrit Pnt Track Page <h1>{pntId}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
 
             </div>
