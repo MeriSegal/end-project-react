@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from "react-router-dom";
-import { Button } from 'react-bootstrap';
 import BmiView from '../../components/BmiView';
+import { ListGroup, Form, Button } from 'bootstrap-4-react';
+import Parse from 'parse';
+import moment from 'moment';
+import UserModel from '../../model/UserModel';
+import MessageModel from '../../model/MessageModel';
 
 class NutritPntTracPage extends Component {
 
@@ -9,32 +13,131 @@ class NutritPntTracPage extends Component {
         super(props);
 
         this.state = {
-            pntId: ""
+            pntId: "",
+            pntName: "",
+            messageInput: "",
+            messageList: []
         }
     }
 
     componentDidMount() {
         const {id} = this.props.match.params;
 
-        this.setState({               
-            pntId: id
-        }); 
+        this.setState({
+            pntName: id
+        })
+
+
+        {   
+            const User = new Parse.User();
+            const query = new Parse.Query(User); 
+            query.equalTo("username", id);
+            query.find().then(results => {    
+                const patients = results.map(result => new UserModel(result));
+                this.setState({
+                    pntId: patients.map(use => use.id)
+                })
+                this.readMessages()                
+            }, (error) => {
+                console.error('Error while fetching Message', error);
+            });
+            
+        }
+
     }
 
+    sendMessage = () =>{
+        const {messageInput, pntId} = this.state;
+
+        const Message = Parse.Object.extend('Message');
+        const myNewObject = new Message();
+
+        myNewObject.set('userId', Parse.User.current());
+        myNewObject.set('pntId', pntId+"");
+        myNewObject.set('content', messageInput);
+        myNewObject.set('isNutrit', true);
+        myNewObject.set('isRead', false);
+        myNewObject.set('date', moment().format("DD-MM-YYYY"));
+        myNewObject.set('time', moment().format("h:mm a"));
+        myNewObject.save().then( result => {
+            this.setState({
+                messageInput: ""
+            })
+            this.readMessages()
+            this.updateMsgStatus()
+        },
+        (error) => {
+            console.error('Error while creating Message: ', error);
+        });
+    }
+
+    updateMsgStatus = () =>{
+
+        const {messageList} = this.state;
+        const Message = Parse.Object.extend('Message')
+        messageList.map(msg =>
+            new Parse.Query(Message).get(msg.id).then((object) => {          
+            object.set('isRead', true);           
+            object.save().then((response) => {              
+              console.log('Updated Message', response);
+            }, (error) => {
+              console.error('Error while updating Message', error);
+            });
+          }))
+    }
+
+    readMessages = () =>{
+            const {pntId} = this.state;
+
+            const Message = Parse.Object.extend('Message');
+            const query = new Parse.Query(Message);
+            query.equalTo("pntId", pntId+"");
+            query.find().then(results => {    
+                const messages = results.map(result => new MessageModel(result))    
+                this.setState({
+                    messageList: messages
+                });
+                console.log('Message found', results);
+            }, (error) => {
+                console.error('Error while fetching Message', error);
+            });
+    }
+
+
+
+
     render() {
-        const {pntId} = this.state;
+        const {pntName, pntId, messageInput, messageList} = this.state;
 
         if (pntId === -1) {
             const redirectPath = `/patients`
             return <Redirect to={redirectPath}/>
         }
 
+        const messagesList = messageList.reverse().map(msg => 
+            <ListGroup.Item className={!msg.isNutrit? "list-item-ans":"list-item-ask"}>
+               {msg.date}:  {msg.time}: {msg.content}
+            </ListGroup.Item>
+        )
+
         return (
             <div>
-                Nutrit Pnt Track Page <h1>{pntId}</h1>
+                <h1>Tracing {pntName}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
-                <BmiView className="bmi-view" activeUser={pntId}/>
+                <Form className="chat-form">
+                    <Form.Group>                      
+                        <label htmlFor="Textarea"> Counsel to patient:</label>
+                        <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
+                    </Form.Group>
 
+                    <Form.Group >
+                        <Button className="chat-btn" variant="primary" size="lg" onClick={this.sendMessage} block variant="success">Send Message </Button>
+                    </Form.Group>
+                </Form>
+                <ListGroup className="group">
+                      {messagesList}   
+                </ListGroup>
+                <BmiView className="bmi-view" activeUser={pntId}/>
             </div>
         );
     }

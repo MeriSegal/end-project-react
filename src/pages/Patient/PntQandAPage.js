@@ -49,7 +49,7 @@ class PntQandAPage extends Component {
 
         const Message = Parse.Object.extend('Message');
         const query = new Parse.Query(Message);
-        query.equalTo("userId", Parse.User.current());      
+        query.equalTo("pntId", Parse.User.current().id);      
         query.find().then(results => {    
             const messages = results.map(result => new MessageModel(result))    
             this.setState({
