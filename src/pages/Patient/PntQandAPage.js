@@ -3,6 +3,9 @@ import PntNavBar from '../../components/PntNavBar';
 import { Redirect } from 'react-router-dom';
 import { ListGroup, Form, Button } from 'bootstrap-4-react';
 import Parse from 'parse';
+import MessageModel from '../../model/MessageModel';
+import moment from 'moment';
+import './PntQandAPage.css'
 
 
 class PntQandAPage extends Component {
@@ -27,18 +30,39 @@ class PntQandAPage extends Component {
         myNewObject.set('content', messageInput);
         myNewObject.set('isNutrit', false);
         myNewObject.set('isRead', false);
+        myNewObject.set('date', moment().format("DD-MM-YYYY"));
+        myNewObject.set('time', moment().format("h:mm a"));
 
-        myNewObject.save().then(
-        (result) => {
-            console.log('Message created', result);
+        myNewObject.save().then( result => {
             this.setState({
                 messageInput: ""
-            });
+            })
+            this.showMesages()
         },
         (error) => {
             console.error('Error while creating Message: ', error);
         });
+    }
 
+
+    showMesages = ()=>{
+
+        const Message = Parse.Object.extend('Message');
+        const query = new Parse.Query(Message);
+        query.equalTo("userId", Parse.User.current());      
+        query.find().then(results => {    
+            const messages = results.map(result => new MessageModel(result))    
+            this.setState({
+                messageList: messages
+            });
+            console.log('Message found', results);
+        }, (error) => {
+            console.error('Error while fetching Message', error);
+        });
+    }
+
+    componentDidMount(){
+        this.showMesages();
     }
     
 
@@ -46,15 +70,13 @@ class PntQandAPage extends Component {
         const { activeUser, handleLogout } = this.props;
         const { messageInput, messageList} = this.state;
 
-
         if (!activeUser) {
             return <Redirect to="/" />
         }
 
-
-
-        const messages = messageList.map(msg => 
-            <ListGroup.Item className="list-item">
+        const messagesList = messageList.reverse().map(msg => 
+            <ListGroup.Item className={msg.isNutrit? "list-item-ans":"list-item-ask"}>
+               {msg.date}:  {msg.time}: {msg.content}
             </ListGroup.Item>
         )
         
@@ -62,23 +84,18 @@ class PntQandAPage extends Component {
             <div>
                 <PntNavBar handleLogout={handleLogout}/>
 
-                <Form>
+                <Form className="chat-form">
                     <Form.Group>                      
                         <label htmlFor="Textarea"> Ask Nutrit:</label>
                         <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
                     </Form.Group>
 
                     <Form.Group >
-                        <Button variant="primary" size="lg" onClick={this.sendMessage} block variant="success">Send Message </Button>
+                        <Button className="chat-btn" variant="primary" size="lg" onClick={this.sendMessage} block variant="success">Send Message </Button>
                     </Form.Group>
                 </Form>
                 <ListGroup  className="fillScr, group">
-                    <ListGroup.Item className="">
-                     17-8-2020: 13:34: yes its ok
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-item">
-                    16-8-2020: 15:41: can i have dsfgheklfhgd fhskhf
-                    </ListGroup.Item>
+                    {messagesList}                   
                 </ListGroup>
 
             </div>

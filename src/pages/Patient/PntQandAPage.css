@@ -1,0 +1,34 @@
+
+.group> .list-item-ask{
+    margin-right: 20%;
+    text-align: left;  
+    margin-top: 10px;
+    background: rgba(136, 196, 163, 0.822);
+    color: black;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+}
+
+.group> .list-item-ans{
+    margin-left: 20%;
+    text-align: left;
+    margin-top: 10px;
+    background: rgba(204, 238, 219, 0.822);
+    color: black;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+}
+
+.chat-btn{
+    color: white;
+    height: 50px;
+    font-weight: bold;
+}
+
+.chat-form{
+    margin-top: 20px;
+}
