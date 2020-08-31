@@ -8,6 +8,7 @@
 
 
 .group> .list-item{
+    display: table;
     margin-top: 10px;
     background: rgba(136, 196, 163, 0.822);
     color: black;
@@ -27,7 +28,7 @@
     }
 
     .babble{
-        margin-left: 25px;
+        margin-left: 10%;
     }
 
     .name-bbl{

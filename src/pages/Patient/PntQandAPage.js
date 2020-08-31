@@ -27,6 +27,7 @@ class PntQandAPage extends Component {
         const myNewObject = new Message();
 
         myNewObject.set('userId', Parse.User.current());
+        myNewObject.set('pntId', Parse.User.current().id);
         myNewObject.set('content', messageInput);
         myNewObject.set('isNutrit', false);
         myNewObject.set('isRead', false);
