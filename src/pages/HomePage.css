@@ -25,7 +25,7 @@ img{
     width: 120px;
 }
 
-.btn{   
+.btn-con> .btn{   
     background-color: rgb(80, 136, 136);
 }
 
@@ -81,8 +81,8 @@ img{
         display: block;
         margin: 50px;
         width: 220px;
-
     }
+    
     .carousel-contaner{
         min-width: 340px;
         clear: right;

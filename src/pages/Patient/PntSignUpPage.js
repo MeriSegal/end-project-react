@@ -63,10 +63,10 @@ class PntSignUpPage extends Component {
        
         return (
             <div>
-                <h1 className="from-title">Sign Up:</h1>
+                <h1 className="from-title">Sign Up</h1>
                 
-                <Form> 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                <Form className="fillScr"> 
+                    <Form.Group as={Row} controlId="formHorizontalText">
                         <Form.Label column sm={2}>
                             Name:
                         </Form.Label>
@@ -75,7 +75,7 @@ class PntSignUpPage extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalText">
                         <Form.Label column sm={2}>
                             Last Name:
                         </Form.Label>
@@ -84,7 +84,7 @@ class PntSignUpPage extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalText">
                         <Form.Label column sm={2}>
                             Phone:
                         </Form.Label>
@@ -111,7 +111,7 @@ class PntSignUpPage extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalDate">
                         <Form.Label column sm={2}>
                             Birthday:
                         </Form.Label>
@@ -120,7 +120,7 @@ class PntSignUpPage extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalNumbr">
                         <Form.Label column sm={2}>
                             Height:
                         </Form.Label>
@@ -129,7 +129,7 @@ class PntSignUpPage extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalNumbr">
                         <Form.Label column sm={2}>
                             Weight:
                         </Form.Label>

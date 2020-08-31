@@ -31,9 +31,9 @@ class PntBmiPage extends Component {
             <div>
                <PntNavBar handleLogout={handleLogout}/>
                <Form className="bmi-form">
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Group as={Row} controlId="formHorizontalWeight">
                         <Form.Label column sm={4}>
-                           Weight
+                           Weight:
                         </Form.Label>
                         <Col sm={8}>
                             <Form.Control type="number" min="40" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>

@@ -3,10 +3,11 @@
 
 .babble{
     color:  rgb(42, 38, 105);
+
 }
 
 
-.list-item{
+.group> .list-item{
     margin-top: 10px;
     background: rgba(136, 196, 163, 0.822);
     color: black;
@@ -21,7 +22,7 @@
 
 @media screen and (min-width: 901px) {
 
-    .list-item{
+    .group> .list-item{
         text-align: left;      
     }
 

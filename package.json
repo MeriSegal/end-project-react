@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.2",
+    "bootstrap-4-react": "0.0.59",
     "moment": "^2.27.0",
     "parse": "^2.15.0",
     "rc-time-picker": "^3.7.3",
