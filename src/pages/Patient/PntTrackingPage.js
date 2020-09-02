@@ -7,10 +7,10 @@ import { Redirect } from 'react-router-dom';
 import FoodModel from '../../model/FoodModel';
 import Parse from 'parse';
 import SymptomModel from '../../model/SymptomModel';
-import { Button, Form, Col, Row } from 'react-bootstrap';
-import TrackingView from '../../components/TrackingView';
+import { Button, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 import './PntTrackingPage.css'
 import FoodTrModel from '../../model/FoodTrModel';
+import SymptomTrModel from '../../model/SymptomTrModel';
 
 
 class PntTrackingPage extends Component {
@@ -26,7 +26,8 @@ class PntTrackingPage extends Component {
             eatTime: moment().format("h:mm a"),           
             foodInput: "",
             foodList: [],
-            trackingFood: [],
+            foodTracking: [],
+            updatFood: "",
             symptom: "",
             symptomTime: moment().format("h:mm a"),
             symptomInput: "",
@@ -75,29 +76,31 @@ class PntTrackingPage extends Component {
             this.setState(
                 {foodInput: ""}
             );
-            this.updateFoodTracking()
+            this.updateFoodTr()
         },
         (error) => {
             console.error('Error while creating FoodTracking: ', error);
         });
     }
 
-    updateFoodTracking =()=> {
-        const theDate = moment().format("DD-MM-YYYY");
-
+    updateFoodTr =()=> {
+        const {theDate} = this.state;
+        
         const FoodTracking = Parse.Object.extend('FoodTracking');
         const query = new Parse.Query(FoodTracking);
         query.equalTo("date", theDate);
         query.equalTo("userId", Parse.User.current());
-        query.find().then(results => {  
+        query.find().then(results => {          
+            const trackingFood = results.map(result => new FoodTrModel(result))
             this.setState({
-                trackingFood: results.map(result => new FoodTrModel(result))
+                foodTracking: trackingFood
             });
         }, (error) => {
             console.error('Error while fetching SymptomList', error);
         });
+        
     }
-
+   
     addTrkSymptom = () => {
         const {symptom, symptomTime, theDate} = this.state;
 
@@ -112,6 +115,7 @@ class PntTrackingPage extends Component {
         myNewObject.save().then(
         (result) => {
             console.log('SymptomTracking created', result);
+            this.updateSymptomTr()
         },
         (error) => {
             console.error('Error while creating SymptomTracking: ', error);
@@ -119,7 +123,26 @@ class PntTrackingPage extends Component {
         );
     }
 
+    updateSymptomTr =()=>{
+        const {theDate} = this.state;
+
+        const SymptomTracking = Parse.Object.extend('SymptomTracking');
+            const query = new Parse.Query(SymptomTracking);
+            query.equalTo("date", theDate);
+            query.equalTo("userId", Parse.User.current());
+            query.find().then(results => {          
+                const trickingSymptoms = results.map(result => new SymptomTrModel(result))
+                this.setState({
+                    symptomTracking: trickingSymptoms
+                });
+            }, (error) => {
+                console.error('Error while fetching SymptomList', error);
+            });    
+    }
+
     async componentDidMount() {
+        this.updateFoodTr()
+        this.updateSymptomTr()
 
         {
             const FoodTracking = Parse.Object.extend('FoodTracking');
@@ -127,10 +150,12 @@ class PntTrackingPage extends Component {
             query.equalTo("userId", Parse.User.current());
             const results = await query.find();
             const foods = results.map(result => new FoodTrModel(result));
-            this.setState({
-                foodList: foods,
-                food: foods[0].foodName
-            });
+            if (foods[0] !=undefined){
+                this.setState({
+                    foodList: foods,
+                    food: foods[0].foodName
+                });
+            }            
         }
 
 
@@ -174,16 +199,34 @@ class PntTrackingPage extends Component {
 
     render() {
         const {activeUser, handleLogout} = this.props;        
-        const {trackingFood, symptomTracking, foodInput, eatTime, food, symptomTime, symptom} = this.state;
+        const {foodTracking, symptomTracking, foodInput, eatTime, food, symptomTime, symptom} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
         }
+       
+       
 
-        const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx t-pick"
+        const mrFoodTr = foodTracking.filter(eat => (eat.time).includes("am"))
+                        .map(food => <p>{food.time}: {food.foodName}</p>
+        );
+               
+        const noonFoodTr = foodTracking.filter(eat => (eat.time).includes("pm"))
+                        .map(food => <p>{food.time}: {food.foodName}</p>
+        );
+
+        const mrSymptomTr = symptomTracking.filter(st => (st.time).includes("am"))
+                        .map(symp => <p>{symp.time}: {symp.symptom}</p>                     
+        );  
+
+        const noonSymptomTr = symptomTracking.filter(st => (st.time).includes("pm"))
+                        .map(symp => <p>{symp.time}: {symp.symptom}</p>  
+        ); 
+
+        const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="t-pick"
                             onChange={this.eatTimeChange} format={this.format} use24Hours inputReadOnly/>
 
-        const sympTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx t-pick"
+        const sympTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="t-pick"
                                 onChange={this.sympTimeChange} format={this.format} use24Hours inputReadOnly />
     
 
@@ -196,12 +239,26 @@ class PntTrackingPage extends Component {
                                 .includes((this.state.symptomInput).toLowerCase()))
                                 .map(symptomfilter => <option value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
 
+
         return (
             <div className="fillScr">
-                <PntNavBar handleLogout={handleLogout}/>                
-                Pnt Tracking Page {activeUser.fname} {activeUser.lname}
-                <br/>
-                <h1> date: {this.state.theDate}</h1>
+                <PntNavBar handleLogout={handleLogout}/> 
+                <div className="page-title">
+                    <h1> date: {this.state.theDate}</h1>
+                </div>                
+
+                <ListGroup className="tr-view"> 
+                    <ListGroupItem className="eat-view">
+                        <h5>Meals:</h5>
+                        <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
+                        <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                    </ListGroupItem>
+                    <ListGroupItem className="symp-view">
+                        <h5>Symptoms:</h5>
+                        <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
+                        <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
+                    </ListGroupItem>               
+                </ListGroup>
 
                 <div className="selector-con">
                     <div className="eat-con">              
@@ -227,7 +284,7 @@ class PntTrackingPage extends Component {
                         <Button variant="primary" size="lg" onClick={this.addTrkSymptom} block variant="success">Add symptom </Button>
                     </div>
                 </div>
-                <TrackingView className="tr-view" trackingFood={trackingFood} symptomTracking={symptomTracking}/>
+
 
             </div>
         );

@@ -1,10 +1,14 @@
 
 
+.page-title{
+    margin: 10px;
+}
+
 .selector-con{
     color: rgb(216, 208, 216);
     text-shadow: 1px 1px 2px black, 0 0 25px rgb(12, 49, 28), 0 0 5px rgb(39, 87, 57);
-    width: 90%;
-    margin-left:5%;
+    width: 85%;
+    margin:auto;
 }
 
 .eat-con, .symp-con{
@@ -40,14 +44,61 @@ select{
     background-color: rgb(80, 136, 136);
 }
 
-@media screen and (min-width: 901px) {
+.tr-view{  
+    margin: 10px;
+    margin-top: 60px;
+    display: table;
+}
+
+.tr-view> .eat-view, .tr-view> .symp-view {
+    display: table-cell;
+    text-align: left;
+    width: 50%;
+    background:  rgba(136, 196, 163, 0.822);
+    border-radius: 10px;
+}
+
+.mrn> p, .eve> p {
+    padding: 1px;   
+    margin: 0px;
+}
+
+.mrn,.eve{
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+.mrn{
+    background: rgba(196, 245, 212, 0.753);   
+}
+.eve{
+    background: rgba(188, 214, 245, 0.767); 
+}
+
+
+@media screen and (min-width: 1299px) {
 
     .selector-con{
-        width: 40%;
-        float: left; 
+        max-width: 40%;
+        float: right; 
     }
 
-    .tr-view{      
+    .tr-view{  
+        float: left;
+        margin-left:5%; 
+    }
+}
+
+@media screen and (min-width: 1599px) {
+
+    .selector-con{
+        max-width: 40%;
         float: right; 
+    }
+
+    .tr-view{  
+        float: left;
+        margin-left: 15%; 
     }
 }
