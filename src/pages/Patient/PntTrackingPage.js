@@ -7,7 +7,10 @@ import { Redirect } from 'react-router-dom';
 import FoodModel from '../../model/FoodModel';
 import Parse from 'parse';
 import SymptomModel from '../../model/SymptomModel';
-import { Button } from 'react-bootstrap';
+import { Button, Form, Col, Row } from 'react-bootstrap';
+import TrackingView from '../../components/TrackingView';
+import './PntTrackingPage.css'
+import FoodTrModel from '../../model/FoodTrModel';
 
 
 class PntTrackingPage extends Component {
@@ -23,48 +26,34 @@ class PntTrackingPage extends Component {
             eatTime: moment().format("h:mm a"),           
             foodInput: "",
             foodList: [],
+            trackingFood: [],
             symptom: "",
             symptomTime: moment().format("h:mm a"),
             symptomInput: "",
-            symptomList: []
+            symptomList: [],
+            symptomTracking: []
         }    
     }
     
-
-    eatTimeChange = (value)=> {
-        this.setState(
-            {eatTime: value.format(this.format)}
-        );
-    }
-
-    sympTimeChange = (value)=> {
-        this.setState(
-            {symptomTime: value.format(this.format)}
-        );
-    }
-   
-    foodSelect = (event)=>{
-        this.setState(
-            {food : event.target.value}
-        )
-    }
-
     changeFood = (event) => {
+
         this.setState(
             {foodInput: event.target.value}
         );
-    }
 
-    symptomSelect = (event)=>{
-        this.setState(
-            {symptom : event.target.value}
-        )
-    }
-
-    changeSymptom = (event) => {
-        this.setState(
-            {symptomInput: event.target.value}
-        );
+        const FoodDisplay = Parse.Object.extend('FoodDisplay');
+            const query = new Parse.Query(FoodDisplay);
+            query.contains("Display_Name", event.target.value);
+            query.equalTo("Portion_Default", 1);
+            query.find().then((results) => {
+                this.setState({
+                    foodList: results.map(result => new FoodModel(result))
+                });
+                console.log('FoodDisplay found', results);
+              }, (error) => {
+                console.error('Error while fetching FoodDisplay', error);
+              });
+            
     }
 
     addTrkFood = () => {
@@ -83,11 +72,30 @@ class PntTrackingPage extends Component {
         myNewObject.save().then(
         (result) => {
             console.log('FoodTracking created', result);
+            this.setState(
+                {foodInput: ""}
+            );
+            this.updateFoodTracking()
         },
         (error) => {
             console.error('Error while creating FoodTracking: ', error);
-        }
-        );
+        });
+    }
+
+    updateFoodTracking =()=> {
+        const theDate = moment().format("DD-MM-YYYY");
+
+        const FoodTracking = Parse.Object.extend('FoodTracking');
+        const query = new Parse.Query(FoodTracking);
+        query.equalTo("date", theDate);
+        query.equalTo("userId", Parse.User.current());
+        query.find().then(results => {  
+            this.setState({
+                trackingFood: results.map(result => new FoodTrModel(result))
+            });
+        }, (error) => {
+            console.error('Error while fetching SymptomList', error);
+        });
     }
 
     addTrkSymptom = () => {
@@ -113,39 +121,70 @@ class PntTrackingPage extends Component {
 
     async componentDidMount() {
 
-        const FoodDisplay = Parse.Object.extend('FoodDisplay');
-        const query = new Parse.Query(FoodDisplay);
-        query.equalTo("hide", false);
-        const results = await query.find();
-        const allFood = results.map(result => new FoodModel(result));
-        this.setState({
-            foodList: allFood
-        });
+        {
+            const FoodTracking = Parse.Object.extend('FoodTracking');
+            const query = new Parse.Query(FoodTracking);           
+            query.equalTo("userId", Parse.User.current());
+            const results = await query.find();
+            const foods = results.map(result => new FoodTrModel(result));
+            this.setState({
+                foodList: foods,
+                food: foods[0].foodName
+            });
+        }
 
 
-        const SymptomList = Parse.Object.extend('SymptomList');
-        const Squery = new Parse.Query(SymptomList);
-        const Sresults = await Squery.find();
-        const symptoms = Sresults.map(result => new SymptomModel(result));
-        this.setState({
-            symptomList: symptoms
-        });
+        {
+            const SymptomList = Parse.Object.extend('SymptomList');
+            const query = new Parse.Query(SymptomList);
+            const results = await query.find();
+            const symptoms = results.map(result => new SymptomModel(result));
+            this.setState({
+                symptomList: symptoms,
+                symptom: symptoms[0].symptomName
+            });
+        }
     }
 
+    eatTimeChange = (value)=> {
+        this.setState(
+            {eatTime: value.format(this.format)}
+        );
+    }
 
+    sympTimeChange = (value)=> {
+        this.setState(
+            {symptomTime: value.format(this.format)}
+        );
+    }
+
+    foodSelect = (event)=>{
+        this.setState(
+            {food : event.target.value}
+        )
+    }
+  
+    symptomSelect = (event)=>{
+        this.setState(
+            {symptom : event.target.value}
+        )
+    }
+
+  
 
     render() {
-        const {activeUser, handleLogout} = this.props;
+        const {activeUser, handleLogout} = this.props;        
+        const {trackingFood, symptomTracking, foodInput, eatTime, food, symptomTime, symptom} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
         }
 
-        const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx"
-                            onChange={this.eatTimeChange} format={this.format} use12Hours inputReadOnly/>
+        const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx t-pick"
+                            onChange={this.eatTimeChange} format={this.format} use24Hours inputReadOnly/>
 
-        const sympTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx"
-                                onChange={this.sympTimeChange} format={this.format} use12Hours inputReadOnly />
+        const sympTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="xxx t-pick"
+                                onChange={this.sympTimeChange} format={this.format} use24Hours inputReadOnly />
     
 
         const foodOptions = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
@@ -158,37 +197,37 @@ class PntTrackingPage extends Component {
                                 .map(symptomfilter => <option value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
 
         return (
-            <div>
+            <div className="fillScr">
                 <PntNavBar handleLogout={handleLogout}/>                
-                Pnt Tracking Page {activeUser.fname}
+                Pnt Tracking Page {activeUser.fname} {activeUser.lname}
                 <br/>
                 <h1> date: {this.state.theDate}</h1>
 
-                <br/>
-                <p>when did you eat? </p>
-                    {eatTimePicker}
-                <br/>
-                <input type='text' onChange={this.changeFood} />
-                 <br/>
-                <select onClick={this.foodSelect}>
-                    {foodOptions}         
-                </select>
-                 <p>{this.state.food}</p>
-                 <Button variant="primary" size="lg" onClick={this.addTrkFood} block variant="success">Add food </Button>
+                <div className="selector-con">
+                    <div className="eat-con">              
+                        <h3>when did you eat? </h3>
+                            {eatTimePicker} 
+                        <Form.Control type="text" placeholder="Search and select from the list:" value={foodInput} onChange={this.changeFood}/>
+                        
+                        <select onClick={this.foodSelect}>
+                            {foodOptions}         
+                        </select>
+                        <p>{eatTime}: {food}</p>
+                        <Button variant="primary" size="lg" onClick={this.addTrkFood} block variant="success">Add food </Button>
+                    </div>
 
-
-                 <br/>
-                 <p>when did you feel symptoms? </p>
-                    {sympTimePicker}
-                <br/>
-                <input type='text' onChange={this.changeSymptom} />
-                 <br/>
-                <select onClick={this.symptomSelect}>
-                    {symptomOptions}         
-                </select>
-                 <p>{this.state.symptom}</p>
-                 <Button variant="primary" size="lg" onClick={this.addTrkSymptom} block variant="success">Add symptom </Button>
-
+                    <div className="symp-con">
+                        <h3>when did you feel symptom? </h3>
+                            {sympTimePicker}
+                        <Form.Control type='text' onChange={(e)=> this.setState({symptomInput: e.target.value})} />
+                        <select onClick={this.symptomSelect}>
+                            {symptomOptions}         
+                        </select>
+                        <p>{symptomTime}: {symptom}</p>
+                        <Button variant="primary" size="lg" onClick={this.addTrkSymptom} block variant="success">Add symptom </Button>
+                    </div>
+                </div>
+                <TrackingView className="tr-view" trackingFood={trackingFood} symptomTracking={symptomTracking}/>
 
             </div>
         );

@@ -1,0 +1,53 @@
+
+
+.selector-con{
+    color: rgb(216, 208, 216);
+    text-shadow: 1px 1px 2px black, 0 0 25px rgb(12, 49, 28), 0 0 5px rgb(39, 87, 57);
+    width: 90%;
+    margin-left:5%;
+}
+
+.eat-con, .symp-con{
+    margin: 10%;
+
+}
+
+.eat-con> p, .symp-con> p{
+    background: rgb(80, 136, 136);
+    border-radius: 5px;
+}
+
+.t-pick{
+    width: 100%;
+    border-radius: 5px;
+}
+
+.rc-time-picker-clear{
+    display: none;
+}
+
+.rc-time-picker-input{
+    color: black;
+    font-size: 15px;
+}
+
+select{
+    min-width: 100%;
+    border-radius: 5px;
+}
+
+.eat-con> .btn, .symp-con> .btn{
+    background-color: rgb(80, 136, 136);
+}
+
+@media screen and (min-width: 901px) {
+
+    .selector-con{
+        width: 40%;
+        float: left; 
+    }
+
+    .tr-view{      
+        float: right; 
+    }
+}
