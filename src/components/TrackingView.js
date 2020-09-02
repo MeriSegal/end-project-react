@@ -20,20 +20,22 @@ class TrackingView extends Component {
    
 
     componentDidMount(){
-
        
         const {theDate} = this.state;
+        const {pntId} = this.props;
+        console.log("tr pntId: ", pntId );
 
         {
             const FoodTracking = Parse.Object.extend('FoodTracking');
             const query = new Parse.Query(FoodTracking);
             query.equalTo("date", theDate);
-            query.equalTo("userId", Parse.User.current());
+            query.equalTo("pntId", pntId+"");
             query.find().then(results => {          
                 const trackingFood = results.map(result => new FoodTrModel(result))
                 this.setState({
                     foodTracking: trackingFood
                 });
+                console.log("tr food: ", trackingFood );
             }, (error) => {
                 console.error('Error while fetching SymptomList', error);
             });
@@ -43,7 +45,7 @@ class TrackingView extends Component {
             const SymptomTracking = Parse.Object.extend('SymptomTracking');
             const query = new Parse.Query(SymptomTracking);
             query.equalTo("date", theDate);
-            query.equalTo("userId", Parse.User.current());
+            query.equalTo("pntId",pntId+"");
             query.find().then(results => {          
                 const trickingSymptoms = results.map(result => new SymptomTrModel(result))
                 this.setState({
@@ -59,38 +61,40 @@ class TrackingView extends Component {
 
     render() {
 
-        const {foodTracking, symptomTracking} = this.props;
+        const {foodTracking, symptomTracking} = this.state;
 
-        const foodTr = this.state.foodTracking.map(food => 
-            <h5 style={{"text-align": "left"}}>{food.time}:  {food.foodName} </h5> 
+        const mrFoodTr = foodTracking.filter(eat => (eat.time).includes("am"))
+                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .map(food => <p>{food.time}: {food.foodName}</p>
+        );
+               
+        const noonFoodTr = foodTracking.filter(eat => (eat.time).includes("pm"))
+                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .map(food => <p>{food.time}: {food.foodName}</p>
         );
 
-        const symptomTr = this.state.symptomTracking.map(symp => 
-            <h5 style={{"text-align": "left"}} >{symp.time}:  {symp.symptom}  </h5>                           
+        const mrSymptomTr = symptomTracking.filter(st => (st.time).includes("am"))
+                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .map(symp => <p>{symp.time}: {symp.symptom}</p>                     
         );  
 
-        if(foodTracking != undefined){           
-            const foodTr = foodTracking.map(food => 
-                <h5 style={{"text-align": "left"}}>{food.time}:  {food.foodName} </h5> 
-            );
-        }
-
-        if(symptomTracking != undefined){
-            const symptomTr = symptomTracking.map(symp => 
-                <h5 style={{"text-align": "left"}} >{symp.time}:  {symp.symptom}  </h5>                           
-            );  
-        }
-
+        const noonSymptomTr = symptomTracking.filter(st => (st.time).includes("pm"))
+                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .map(symp => <p>{symp.time}: {symp.symptom}</p>  
+        );               
 
         return (
-            <ListGroup style={{display:'table'}}> 
-                 <ListGroupItem style={{display: "table-cell"}}>
-                     {foodTr}
-                 </ListGroupItem>
-                 <ListGroupItem style={{display: "table-cell"}}>
-                     {symptomTr}
-                 </ListGroupItem>
-               
+            <ListGroup className="tr-view"> 
+                <ListGroupItem className="eat-view">
+                    <h5>Meals:</h5>
+                    <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
+                    <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                </ListGroupItem>
+                <ListGroupItem className="symp-view">
+                    <h5>Symptoms:</h5>
+                    <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
+                    <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
+                </ListGroupItem>               
             </ListGroup>
         );
     }

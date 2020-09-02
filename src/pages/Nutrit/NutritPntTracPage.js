@@ -6,6 +6,7 @@ import Parse from 'parse';
 import moment from 'moment';
 import UserModel from '../../model/UserModel';
 import MessageModel from '../../model/MessageModel';
+import TrackingView from '../../components/TrackingView';
 
 class NutritPntTracPage extends Component {
 
@@ -114,6 +115,11 @@ class NutritPntTracPage extends Component {
             return <Redirect to={redirectPath}/>
         }
 
+        let trView = <div></div>
+        if (pntId!=""){
+            trView= <TrackingView pntId={pntId}></TrackingView>
+        }
+
         const messagesList = messageList.reverse().map(msg => 
             <ListGroup.Item className={!msg.isNutrit? "list-item-ans":"list-item-ask"}>
                {msg.date}:  {msg.time}: {msg.content}
@@ -124,9 +130,15 @@ class NutritPntTracPage extends Component {
             <div>
                 <h1>Tracing {pntName}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
+               
+                {trView}
+                
+                <BmiView className="bmi-view" activeUser={pntId}/>
+                
+
                 <Form className="chat-form">
                     <Form.Group>                      
-                        <label htmlFor="Textarea"> Counsel to patient:</label>
+                        <label htmlFor="Textarea"> Patient counseling:</label>
                         <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
                     </Form.Group>
 
@@ -137,7 +149,7 @@ class NutritPntTracPage extends Component {
                 <ListGroup className="group">
                       {messagesList}   
                 </ListGroup>
-                <BmiView className="bmi-view" activeUser={pntId}/>
+                
             </div>
         );
     }
