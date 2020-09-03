@@ -210,9 +210,7 @@ class PntTrackingPage extends Component {
         if (!activeUser) {
             return <Redirect to="/" />
         }
-       
-       
-
+              
         const mrFoodTr = foodTracking.filter(eat => (eat.time).includes("am"))
                         .sort((a, b) => a.time > b.time ? 1 : -1)
                         .map(food => <p>{food.time}: {food.foodName}</p>

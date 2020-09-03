@@ -9,7 +9,8 @@ class UserModel{
         this.phone = parseUser.get("phone");
         this.birthday = parseUser.get("birthday");
         this.height = parseUser.get("height")/100;
-        this.weight = parseUser.get("weight");    
+        this.weight = parseUser.get("weight"); 
+        this.ismale = parseUser.get("isMale");  
         this.isnutrit = parseUser.get("isnutrit");
         this.message = 0;     
     }

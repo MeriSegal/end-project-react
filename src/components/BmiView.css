@@ -14,4 +14,12 @@ div> .bmi-card{
     text-shadow: 1px 1px 2px white, 0 0 25px rgb(12, 49, 28), 0 0 5px rgb(39, 87, 57);
 }
 
+tr> td:first-child, tr> th:first-child{
+    text-align: left ;
+    font-weight: bold;
+}
 
+tbody> .bg-this{
+    color:rgb(42, 38, 105);
+    background: rgba(61, 143, 143, 0.486);
+}

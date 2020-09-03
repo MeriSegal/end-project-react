@@ -19,6 +19,7 @@ class NutritPntTracPage extends Component {
             pntName: "",
             pntHeight: "",
             pntWeight: "",
+            pntIsMale: false,
             messageInput: "",
             messageList: []
         }
@@ -41,7 +42,8 @@ class NutritPntTracPage extends Component {
                 this.setState({
                     pntId: patients.map(use => use.id),
                     pntHeight: patients.map(use => use.height),
-                    pntWeight: patients.map(use => use.weight)
+                    pntWeight: patients.map(use => use.weight),
+                    pntIsMale: patients.map(use => use.ismale),
                 })
                 this.readMessages()                
             }, (error) => {
@@ -113,7 +115,7 @@ class NutritPntTracPage extends Component {
 
 
     render() {
-        const {pntName, pntId, pntHeight, pntWeight, messageInput, messageList} = this.state;
+        const {pntName, pntId, pntHeight, pntWeight, pntIsMale, messageInput, messageList} = this.state;
 
         if (pntId === -1) {
             const redirectPath = `/patients`
@@ -139,7 +141,7 @@ class NutritPntTracPage extends Component {
                
                 {trView}
                 
-                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight}/>
+                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} pntIsMale={pntIsMale}/>
                 
 
                 <Form className="chat-form">
