@@ -20,12 +20,13 @@ class PntSignUpPage extends Component {
             birthdayInput: "",
             heightInput: "",
             weightInput: "",
+            isMale: false,
             redirectToPnt: false 
         }    
     }
 
     signUp = () =>{
-        const {fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
+        const {fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput, isMale} = this.state;
         const { handleLogin } = this.props;
 
         const user = new Parse.User
@@ -38,6 +39,7 @@ class PntSignUpPage extends Component {
         user.set('birthday', birthdayInput);
         user.set('height', Number(heightInput));
         user.set('weight', Number(weightInput));
+        user.set('isMale', isMale);
         user.set('isnutrit', false);
         user.set('password', pwdInput);
         
@@ -55,7 +57,7 @@ class PntSignUpPage extends Component {
 
     render() {
 
-        const {redirectToPnt, fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput} = this.state;
+        const {redirectToPnt, fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput, isMale} = this.state;
         
         if (redirectToPnt) {
             return <Redirect to="/ptr" />
@@ -135,6 +137,15 @@ class PntSignUpPage extends Component {
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="number" min="40" value={weightInput} onChange={(e) => this.setState({weightInput: e.target.value})}/>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} >
+                        <Form.Label as="legend"> Gender: </Form.Label>
+
+                        <Col sm={12}>
+                            <Form.Check type="checkbox" inline label="Female" checked={isMale? false:true} onChange={() => this.setState({isMale: false})}/>
+                            <Form.Check type="checkbox" inline  label="Male" checked={isMale? true:false} onChange={() => this.setState({isMale: true})}/>
                         </Col>
                     </Form.Group>
 
