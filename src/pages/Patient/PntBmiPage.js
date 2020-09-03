@@ -44,7 +44,7 @@ class PntBmiPage extends Component {
                         <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
                     </Form.Group>
                </Form>
-               <BmiView className="bmi-view" activeUser={activeUser}/>
+               <BmiView className="bmi-view" userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={activeUser.weight}/>
 
             </div>
         );

@@ -7,6 +7,7 @@ import moment from 'moment';
 import UserModel from '../../model/UserModel';
 import MessageModel from '../../model/MessageModel';
 import TrackingView from '../../components/TrackingView';
+import FontAwesome from 'react-fontawesome';
 
 class NutritPntTracPage extends Component {
 
@@ -16,6 +17,8 @@ class NutritPntTracPage extends Component {
         this.state = {
             pntId: "",
             pntName: "",
+            pntHeight: "",
+            pntWeight: "",
             messageInput: "",
             messageList: []
         }
@@ -36,7 +39,9 @@ class NutritPntTracPage extends Component {
             query.find().then(results => {    
                 const patients = results.map(result => new UserModel(result));
                 this.setState({
-                    pntId: patients.map(use => use.id)
+                    pntId: patients.map(use => use.id),
+                    pntHeight: patients.map(use => use.height),
+                    pntWeight: patients.map(use => use.weight)
                 })
                 this.readMessages()                
             }, (error) => {
@@ -108,7 +113,7 @@ class NutritPntTracPage extends Component {
 
 
     render() {
-        const {pntName, pntId, messageInput, messageList} = this.state;
+        const {pntName, pntId, pntHeight, pntWeight, messageInput, messageList} = this.state;
 
         if (pntId === -1) {
             const redirectPath = `/patients`
@@ -129,11 +134,12 @@ class NutritPntTracPage extends Component {
         return (
             <div>
                 <h1>Tracing {pntName}</h1>
-                <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Exit pnt </Button>
+                <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Back to list 
+                <FontAwesome className="fas fa-level-up fa-10x"/> </Button>
                
                 {trView}
                 
-                <BmiView className="bmi-view" activeUser={pntId}/>
+                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight}/>
                 
 
                 <Form className="chat-form">

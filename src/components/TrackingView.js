@@ -23,7 +23,6 @@ class TrackingView extends Component {
        
         const {theDate} = this.state;
         const {pntId} = this.props;
-        console.log("tr pntId: ", pntId );
 
         {
             const FoodTracking = Parse.Object.extend('FoodTracking');

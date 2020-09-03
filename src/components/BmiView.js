@@ -12,22 +12,26 @@ class BmiView extends Component {
         }    
     }
 
+
+
+
+
     render() {
-        const {activeUser} = this.props;
+        const {userName, pntHeight, pntWeight} = this.props;
 
-        const ht = activeUser.height*activeUser.height
-        const bmi = (activeUser.weight/ht).toFixed(1)
-
+        const ht = pntHeight*pntHeight
+        const bmi = (pntWeight/ht).toFixed(1)
+        
         return (
 
             <Card className="bmi-card">
                 <Card.Body>
-                    <Card.Title> {activeUser.fname}  {activeUser.lname} BMI : {bmi}</Card.Title>
+                    <Card.Title> {userName} BMI : {bmi}</Card.Title>
                     <Card.Text>
                     <br/>
-                    Heigt: {activeUser.height}
+                    Heigt: {pntHeight}
                     <br/>
-                    Corent Weight: {activeUser.weight}
+                    Corent Weight: {pntWeight}
                     <br/>
                     updated on: 28-8-2020
                     </Card.Text>

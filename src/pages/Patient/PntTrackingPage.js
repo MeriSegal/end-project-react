@@ -48,7 +48,8 @@ class PntTrackingPage extends Component {
             query.equalTo("Portion_Default", 1);
             query.find().then((results) => {
                 this.setState({
-                    foodList: results.map(result => new FoodModel(result))
+                    foodList: results.map(result => new FoodModel(result)),
+                    food: this.state.foodList[0].foodName
                 });
                 console.log('FoodDisplay found', results);
               }, (error) => {
