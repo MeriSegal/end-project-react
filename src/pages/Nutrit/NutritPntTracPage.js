@@ -19,7 +19,7 @@ class NutritPntTracPage extends Component {
             pntName: "",
             pntHeight: "",
             pntWeight: "",
-            pntIsMale: false,
+            pntIsMale: "",
             messageInput: "",
             messageList: []
         }
@@ -38,12 +38,12 @@ class NutritPntTracPage extends Component {
             const query = new Parse.Query(User); 
             query.equalTo("username", id);
             query.find().then(results => {    
-                const patients = results.map(result => new UserModel(result));
+                const patient = results.map(result => new UserModel(result));
                 this.setState({
-                    pntId: patients.map(use => use.id),
-                    pntHeight: patients.map(use => use.height),
-                    pntWeight: patients.map(use => use.weight),
-                    pntIsMale: patients.map(use => use.ismale),
+                    pntId: patient[0].id,
+                    pntHeight: patient[0].height,
+                    pntWeight: patient[0].weight,
+                    pntIsMale: patient[0].ismale
                 })
                 this.readMessages()                
             }, (error) => {
