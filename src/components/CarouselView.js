@@ -35,8 +35,8 @@ class CarouselView extends Component {
     const { nutritContent } = this.state;
 
 
-    const caruoselItem = nutritContent.map(item => 
-                        <Carousel.Item>
+    const caruoselItem = nutritContent.map((item, index) => 
+                        <Carousel.Item key={index}>
                             <div className="item-title">                                                            
                                 <br/>                                  
                                 <h3>{item.title}</h3>

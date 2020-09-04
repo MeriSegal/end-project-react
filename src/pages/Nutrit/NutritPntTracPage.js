@@ -127,8 +127,8 @@ class NutritPntTracPage extends Component {
             trView= <TrackingView pntId={pntId}></TrackingView>
         }
 
-        const messagesList = messageList.reverse().map(msg => 
-            <ListGroup.Item className={!msg.isNutrit? "list-item-ans":"list-item-ask"}>
+        const messagesList = messageList.reverse().map((msg, index) => 
+            <ListGroup.Item key={index} className={!msg.isNutrit? "list-item-ans":"list-item-ask"}>
                {msg.date}:  {msg.time}: {msg.content}
             </ListGroup.Item>
         )
