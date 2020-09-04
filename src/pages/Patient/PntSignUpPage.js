@@ -4,6 +4,7 @@ import Parse from 'parse';
 import { Redirect } from 'react-router-dom';
 import UserModel from '../../model/UserModel';
 import '../form.css'
+import moment from 'moment';
 
 
 class PntSignUpPage extends Component {
@@ -29,7 +30,7 @@ class PntSignUpPage extends Component {
         const {fnameInput, lnameInput, emailInput, phoneInput, pwdInput, birthdayInput, heightInput, weightInput, isMale} = this.state;
         const { handleLogin } = this.props;
 
-        const user = new Parse.User
+        const user = new Parse.User()
 
         user.set('username',  fnameInput+" "+lnameInput);
         user.set('email', emailInput);
@@ -46,13 +47,35 @@ class PntSignUpPage extends Component {
 
         user.signUp().then((user) => {
             handleLogin(new UserModel(user));
-            this.setState({                
-                redirectToPnt: true
-            })
+            this.updateWeight();           
         }).catch(error => {
             console.error('Error while signing up user', error);
         });
 
+    }
+
+    updateWeight = () =>{
+        const {weightInput} = this.state;
+
+        const WeightTracking = Parse.Object.extend('WeightTracking');
+        const myNewObject = new WeightTracking();
+        
+        myNewObject.set('UserId', Parse.User.current());
+        myNewObject.set('pntId', Parse.User.current().id+"");
+        myNewObject.set('date', moment().format("DD-MM-YYYY"));
+        myNewObject.set('weight', weightInput);
+        
+        myNewObject.save().then(
+            (result) => {
+                this.setState({                
+                    redirectToPnt: true
+                })
+            console.log('WeightTracking created', result);
+            },
+            (error) => {
+            console.error('Error while creating WeightTracking: ', error);
+            }
+        );
     }
 
     render() {

@@ -15,16 +15,19 @@ class CarouselView extends Component {
         }
     }
   
-    async componentDidMount() {
+    componentDidMount() {
        
         const HomeContent = Parse.Object.extend('HomeContent');
         const query = new Parse.Query(HomeContent);
-        const results = await query.find();
-        const nutContent = results.map(result => new HomeConModel(result));
-        this.setState({
-            nutritContent: nutContent
-        });
-        
+        query.find().then((results) => {
+            const nutContent = results.map(result => new HomeConModel(result));
+            this.setState({
+                nutritContent: nutContent
+            });
+            console.log('HomeContent found', results);
+        }, (error) => {
+            console.error('Error while fetching HomeContent', error);
+        }); 
     }
 
 

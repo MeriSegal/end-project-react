@@ -1,6 +1,3 @@
-import Parse from 'parse';
-import moment from 'moment';
-
 
 class SymptomTrModel{
 

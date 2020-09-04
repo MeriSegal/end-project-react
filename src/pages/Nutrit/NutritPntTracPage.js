@@ -123,7 +123,7 @@ class NutritPntTracPage extends Component {
         }
 
         let trView = <div></div>
-        if (pntId!=""){
+        if (pntId!==""){
             trView= <TrackingView pntId={pntId}></TrackingView>
         }
 

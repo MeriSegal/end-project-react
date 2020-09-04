@@ -40,7 +40,7 @@ class NutritPntListPage extends Component {
 
             results.map(result =>{
                 const newpntList = this.state.pntList.map(v => {
-                    return v.id == result.get("userId").id ? {...v, message: v.message+1} : {...v, message: v.message}
+                    return v.id === result.get("userId").id ? {...v, message: v.message+1} : {...v, message: v.message}
                   })
                 this.setState({
                     pntList: newpntList
