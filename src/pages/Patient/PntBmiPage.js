@@ -14,7 +14,22 @@ class PntBmiPage extends Component {
     
         this.state = {
             weightInput: this.props.activeUser.weight,
+            updateTime: "01-09-2020"
         }    
+    }
+
+    componentDidMount(){
+        const WeightTracking = Parse.Object.extend('WeightTracking');
+        const query = new Parse.Query(WeightTracking);
+        query.equalTo("UserId", Parse.User.current());    
+        query.find().then((results) => { 
+            this.setState({
+                updateTime: results.reverse()[0].get("date")
+            })   
+            console.log('WeightTracking found', results[0].get("date"));
+        }, (error) => {
+            console.error('Error while fetching WeightTracking', error);
+        });
     }
 
     updateWeight = () =>{
@@ -45,6 +60,9 @@ class PntBmiPage extends Component {
         
         myNewObject.save().then(
             (result) => {
+                this.setState({
+                    updateTime: moment().format("DD-MM-YYYY")
+                })  
             console.log('WeightTracking created', result);
             },
             (error) => {
@@ -55,7 +73,7 @@ class PntBmiPage extends Component {
 
     render() {
         const { activeUser, handleLogout } = this.props;
-        const { weightInput} = this.state;
+        const {updateTime, weightInput} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
@@ -78,7 +96,7 @@ class PntBmiPage extends Component {
                         <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
                     </Form.Group>
                </Form>
-               <BmiView className="bmi-view" userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale}/>
+               <BmiView className="bmi-view" userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale} updateTime={updateTime}/>
 
             </div>
         );

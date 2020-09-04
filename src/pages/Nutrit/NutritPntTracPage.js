@@ -20,6 +20,7 @@ class NutritPntTracPage extends Component {
             pntHeight: "",
             pntWeight: "",
             pntIsMale: "",
+            weightUpdateTime: "",
             messageInput: "",
             messageList: []
         }
@@ -45,13 +46,27 @@ class NutritPntTracPage extends Component {
                     pntWeight: patient[0].weight,
                     pntIsMale: patient[0].ismale
                 })
-                this.readMessages()                
+                this.readMessages() 
+                this.getWeightUpdateTime()               
             }, (error) => {
                 console.error('Error while fetching Message', error);
             });
-            
         }
 
+    }
+
+    getWeightUpdateTime = ()=>{
+        const WeightTracking = Parse.Object.extend('WeightTracking');
+        const query = new Parse.Query(WeightTracking);
+        query.equalTo("pntId", this.state.pntId+"");    
+        query.find().then((results) => { 
+            this.setState({
+                weightUpdateTime: results.reverse()[0].get("date")
+            })   
+            console.log('WeightTracking found', results[0].get("date"));
+        }, (error) => {
+            console.error('Error while fetching WeightTracking', error);
+        });
     }
 
     sendMessage = () =>{
@@ -115,7 +130,7 @@ class NutritPntTracPage extends Component {
 
 
     render() {
-        const {pntName, pntId, pntHeight, pntWeight, pntIsMale, messageInput, messageList} = this.state;
+        const {pntName, pntId, pntHeight, pntWeight, weightUpdateTime, pntIsMale, messageInput, messageList} = this.state;
 
         if (pntId === -1) {
             const redirectPath = `/patients`
@@ -141,7 +156,7 @@ class NutritPntTracPage extends Component {
                
                 {trView}
                 
-                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} pntIsMale={pntIsMale}/>
+                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
                 
 
                 <Form className="chat-form">

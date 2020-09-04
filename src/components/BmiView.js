@@ -53,7 +53,7 @@ class BmiView extends Component {
 
 
     render() {
-        const {userName, pntHeight, pntWeight} = this.props;
+        const {userName, pntHeight, pntWeight, updateTime} = this.props;
 
         const ht = pntHeight*pntHeight
         const bmi = (pntWeight/ht).toFixed(1)
@@ -68,8 +68,8 @@ class BmiView extends Component {
         const tableRows = bmiDetails.map(detail => 
                                             <tr className={detail.bmi === this.bmiRange() ? "bg-this" : ""}>
                                                 <td>{detail.bmi}</td>
-                                                <td> {detail.male}</td>
-                                                <td> {detail.female}</td>
+                                                <td>{detail.male}</td>
+                                                <td>{detail.female}</td>
                                             </tr>);
 
         return (
@@ -83,7 +83,7 @@ class BmiView extends Component {
                     <br/>
                     Corent Weight: {pntWeight}
                     <br/>
-                    updated on: 28-8-2020
+                    updated on: {updateTime}
                     </Card.Text>
                 </Card.Body>
                 <Table>
