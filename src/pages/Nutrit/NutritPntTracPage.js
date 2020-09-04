@@ -8,6 +8,7 @@ import UserModel from '../../model/UserModel';
 import MessageModel from '../../model/MessageModel';
 import TrackingView from '../../components/TrackingView';
 import FontAwesome from 'react-fontawesome';
+import WeightGraph from '../../components/WeightGraph';
 
 class NutritPntTracPage extends Component {
 
@@ -52,7 +53,6 @@ class NutritPntTracPage extends Component {
                 console.error('Error while fetching Message', error);
             });
         }
-
     }
 
     getWeightUpdateTime = ()=>{
@@ -138,8 +138,10 @@ class NutritPntTracPage extends Component {
         }
 
         let trView = <div></div>
+        let trWeight = <div>ttttttttttttt</div>
         if (pntId!==""){
-            trView= <TrackingView pntId={pntId}></TrackingView>
+            trView = <TrackingView pntId={pntId}></TrackingView>
+            trWeight = <WeightGraph pntId={pntId}></WeightGraph>
         }
 
         const messagesList = messageList.reverse().map((msg, index) => 
@@ -157,7 +159,8 @@ class NutritPntTracPage extends Component {
                 {trView}
                 
                 <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
-                
+               
+                {trWeight}
 
                 <Form className="chat-form">
                     <Form.Group>                      

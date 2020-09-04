@@ -9,12 +9,6 @@ form{
     margin-bottom: 10px;
 }
 
-.fillScr{
-    min-height: 1000px; 
-}
-
-
-
 .form-control{
     border: solid  rgb(50, 112, 74);
     height: 50px;

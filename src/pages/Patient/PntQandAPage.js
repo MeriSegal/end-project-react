@@ -82,7 +82,7 @@ class PntQandAPage extends Component {
         )
         
         return (
-            <div>
+            <div className="fillScr">
                 <PntNavBar handleLogout={handleLogout}/>
 
                 <Form className="chat-form">

@@ -12,7 +12,7 @@ class LoginPage extends Component {
         super(props);
     
         this.state = {
-            emailInput: "lee@lee.com",
+            emailInput: "nur@nur.com",
             pwdInput: "1234",
             showInvalidCredentials: false,
             redirectToPnt: false,

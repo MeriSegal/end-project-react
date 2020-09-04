@@ -6,6 +6,7 @@ import { Form , Col, Row, Button } from 'react-bootstrap';
 import './PntBmiPage.css';
 import Parse from 'parse';
 import moment from 'moment';
+import WeightGraph from '../../components/WeightGraph';
 
 class PntBmiPage extends Component {
 
@@ -80,8 +81,9 @@ class PntBmiPage extends Component {
         }
 
         return (
-            <div>
+            <div className="fillScr">
                <PntNavBar handleLogout={handleLogout}/>
+
                <Form className="bmi-form">
                     <Form.Group as={Row} controlId="formHorizontalWeight">
                         <Form.Label column sm={4}>
@@ -96,7 +98,10 @@ class PntBmiPage extends Component {
                         <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
                     </Form.Group>
                </Form>
+
                <BmiView className="bmi-view" userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale} updateTime={updateTime}/>
+               
+               <WeightGraph pntId={Parse.User.current().id}></WeightGraph>
 
             </div>
         );

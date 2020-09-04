@@ -80,7 +80,7 @@ class NutritPntListPage extends Component {
         )
 
         return (
-            <div >
+            <div className="fillScr">
                 <NutritNavBar handleLogout={handleLogout} />
 
                <ListGroup className="group">

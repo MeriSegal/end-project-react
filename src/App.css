@@ -29,6 +29,10 @@
 
 }
 
+.fillScr{
+  min-height: 1000px; 
+}
+
 .fas{
   padding-left: 5px;
 }

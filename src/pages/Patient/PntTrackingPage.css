@@ -48,6 +48,7 @@ select{
     margin: 10px;
     margin-top: 60px;
     display: table;
+    min-width: 95%;
 }
 
 .tr-view> .eat-view, .tr-view> .symp-view {
@@ -87,6 +88,7 @@ select{
     .tr-view{  
         float: left;
         margin-left:5%; 
+        min-width: 45%;
     }
 }
 
@@ -100,5 +102,6 @@ select{
     .tr-view{  
         float: left;
         margin-left: 15%; 
+        min-width: 35%;
     }
 }
