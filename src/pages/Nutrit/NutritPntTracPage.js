@@ -138,7 +138,7 @@ class NutritPntTracPage extends Component {
         }
 
         let trView = <div></div>
-        let trWeight = <div>ttttttttttttt</div>
+        let trWeight = <div></div>
         if (pntId!==""){
             trView = <TrackingView pntId={pntId}></TrackingView>
             trWeight = <WeightGraph pntId={pntId}></WeightGraph>
@@ -158,10 +158,12 @@ class NutritPntTracPage extends Component {
                
                 {trView}
                 
-                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
-               
-                {trWeight}
+                <div className="weight-graph">
+                    {trWeight}
+                </div>  
 
+                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
+                 
                 <Form className="chat-form">
                     <Form.Group>                      
                         <label htmlFor="Textarea"> Patient counseling:</label>

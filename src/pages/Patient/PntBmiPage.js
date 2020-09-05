@@ -6,7 +6,8 @@ import { Form , Col, Row, Button } from 'react-bootstrap';
 import './PntBmiPage.css';
 import Parse from 'parse';
 import moment from 'moment';
-import WeightGraph from '../../components/WeightGraph';
+import {Line} from 'react-chartjs-2';
+import WeightModel from '../../model/WeightModel';
 
 class PntBmiPage extends Component {
 
@@ -15,7 +16,8 @@ class PntBmiPage extends Component {
     
         this.state = {
             weightInput: this.props.activeUser.weight,
-            updateTime: "01-09-2020"
+            updateTime: "",
+            graphUpdate: []
         }    
     }
 
@@ -31,6 +33,8 @@ class PntBmiPage extends Component {
         }, (error) => {
             console.error('Error while fetching WeightTracking', error);
         });
+
+        this.updateGraph() 
     }
 
     updateWeight = () =>{
@@ -63,7 +67,8 @@ class PntBmiPage extends Component {
             (result) => {
                 this.setState({
                     updateTime: moment().format("DD-MM-YYYY")
-                })  
+                }) 
+                this.updateGraph() 
             console.log('WeightTracking created', result);
             },
             (error) => {
@@ -72,13 +77,50 @@ class PntBmiPage extends Component {
         );
     }
 
+    updateGraph = () =>{
+
+        const WeightTracking = Parse.Object.extend('WeightTracking');
+        const query = new Parse.Query(WeightTracking);
+        query.equalTo("pntId", Parse.User.current().id);    
+        query.find().then((results) => { 
+            this.setState({
+                graphUpdate: results.map(result => new WeightModel(result))
+            })   
+            console.log('WeightGraph found', results);
+        }, (error) => {
+            console.error('Error while fetching WeightTracking', error);
+        });
+    }
+
     render() {
         const { activeUser, handleLogout } = this.props;
-        const {updateTime, weightInput} = this.state;
+        const {updateTime, weightInput, graphUpdate} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
         }
+
+        let weightArr = []   
+        let dateArr = [] 
+        
+        for (let i= 0; i<graphUpdate.length; i++){     
+            dateArr.push(graphUpdate[i].date)
+            weightArr.push(graphUpdate[i].weight)        
+        }
+      
+        const data = {
+          labels: dateArr,
+          datasets: [
+            {
+              label: 'Weight', fill: false, lineTension: 0.5, backgroundColor: 'rgba(75,192,192,0.4)',
+              borderColor: 'rgba(42, 38, 105)', borderCapStyle: 'butt', borderDash: [], borderDashOffset: 0.0,
+              borderJoinStyle: 'miter', pointBorderColor: 'rgba(75,192,192,1)', pointBackgroundColor: '#fff',
+              pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: 'rgba(136, 196, 163, 0.822)',
+              pointHoverBorderColor: 'rgba(220,220,220,1)', pointHoverBorderWidth: 2, pointRadius: 3,
+              pointHitRadius: 10, data: weightArr
+            }
+          ]
+        };
 
         return (
             <div className="fillScr">
@@ -90,7 +132,7 @@ class PntBmiPage extends Component {
                            Weight:
                         </Form.Label>
                         <Col sm={8}>
-                            <Form.Control type="number" min="40" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
+                            <Form.Control type="number" min="40" step="0.1" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
@@ -99,10 +141,13 @@ class PntBmiPage extends Component {
                     </Form.Group>
                </Form>
 
-               <BmiView className="bmi-view" userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale} updateTime={updateTime}/>
+                <div className="bmi-view">
+                    <BmiView userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale} updateTime={updateTime}/>
+                </div>
                
-               <WeightGraph pntId={Parse.User.current().id}></WeightGraph>
-
+               <div className="weight-graph">
+                    <Line data={data} />
+               </div>
             </div>
         );
     }

@@ -1,8 +1,15 @@
 
 
 .bmi-form{
-    margin-top: 50px;          
+    margin-top: 20px;          
 }
+
+.weight-graph{
+    background-color: rgba(136, 196, 163, 0.822);
+    border-radius: 5px;
+    margin: 10px;
+}
+
 
 @media screen and (min-width: 901px) {
 
@@ -11,4 +18,14 @@
         margin-top: 150px;          
     }
    
+    .bmi-view{
+        float: left;
+        margin-top: 150px;
+        margin-right: 5%;
+    }
+
+    .weight-graph{
+        float: left;
+        margin-top: 25%;
+    }
 }
