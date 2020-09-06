@@ -42,7 +42,6 @@ select{
     margin: 10px;
     margin-top: 60px;
     display: table;
-    min-width: 95%;
 }
 
 .tr-view> .eat-view, .tr-view> .symp-view {
@@ -72,30 +71,16 @@ select{
 }
 
 
-@media screen and (min-width: 1299px) {
+@media screen and (min-width: 901px) {
 
     .selector-con{
-        max-width: 40%;
+        display: inline-block; 
         float: right; 
     }
 
     .tr-view{  
-        float: left;
-        margin-left:5%; 
-        min-width: 45%;
-    }
-}
-
-@media screen and (min-width: 1599px) {
-
-    .selector-con{
-        max-width: 40%;
-        float: right; 
-    }
-
-    .tr-view{  
+        display: inline-block; 
         float: left;
         margin-left: 15%; 
-        min-width: 35%;
     }
 }

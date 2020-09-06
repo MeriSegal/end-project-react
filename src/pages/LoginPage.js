@@ -12,8 +12,8 @@ class LoginPage extends Component {
         super(props);
     
         this.state = {
-            emailInput: "nur@nur.com",
-            pwdInput: "1234",
+            emailInput: "",
+            pwdInput: "",
             showInvalidCredentials: false,
             redirectToPnt: false,
             redirectToNutrit: false

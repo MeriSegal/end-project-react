@@ -255,7 +255,7 @@ class PntTrackingPage extends Component {
                     <h1> date: {this.state.theDate}</h1>
                 </div>                
 
-                <ListGroup className="tr-view"> 
+                <ListGroup className="tr-view col-lg-5"> 
                     <ListGroupItem className="eat-view">
                         <h5>Meals:</h5>
                         <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
@@ -268,7 +268,7 @@ class PntTrackingPage extends Component {
                     </ListGroupItem>               
                 </ListGroup>
 
-                <div className="selector-con">
+                <div className="selector-con col-lg-5">
                     <div className="eat-con">              
                         <h3>when did you eat? </h3>
                             {eatTimePicker} 
