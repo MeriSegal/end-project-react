@@ -71,9 +71,7 @@ class WeightGraph extends Component {
     };
 
     return (
-      <div>       
         <Line data={data} />
-      </div>
     );
   }
 }

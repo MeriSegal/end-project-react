@@ -126,28 +126,30 @@ class PntBmiPage extends Component {
             <div className="fillScr">
                <PntNavBar handleLogout={handleLogout}/>
 
-               <Form className="bmi-form">
-                    <Form.Group as={Row} controlId="formHorizontalWeight">
-                        <Form.Label column sm={4}>
-                           Weight:
-                        </Form.Label>
-                        <Col sm={8}>
-                            <Form.Control type="number" min="40" step="0.1" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
-                        </Col>
-                    </Form.Group>
+               <div className="g-con col-lg-5">
+                    <Form className="bmi-form">
+                            <Form.Group as={Row} controlId="formHorizontalWeight">
+                                <Form.Label column sm={4}>
+                                Weight:
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control type="number" min="40" step="0.1" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
+                                </Col>
+                            </Form.Group>
 
-                    <Form.Group>
-                        <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
-                    </Form.Group>
-               </Form>
+                            <Form.Group>
+                                <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
+                            </Form.Group>
+                    </Form>
 
-                <div className="bmi-view">
+                    <div className="weight-graph">
+                            <Line data={data} />
+                    </div>
+               </div>
+                <div className="bmi-view col-lg-5">
                     <BmiView userName={activeUser.fname+" "+activeUser.lname}  pntHeight={activeUser.height} pntWeight={weightInput} pntIsMale={activeUser.ismale} updateTime={updateTime}/>
                 </div>
-               
-               <div className="weight-graph">
-                    <Line data={data} />
-               </div>
+                             
             </div>
         );
     }

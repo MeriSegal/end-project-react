@@ -1,0 +1,26 @@
+
+
+.trk-pnt-con> button{
+    font-size: 1.4em;    
+}
+
+@media screen and (min-width: 901px) {
+
+    .gr-con{
+        display: block;
+        float: left;
+        margin-left: 5%;
+    }
+      
+    .weight-graph{
+        display: inline-block; 
+        max-width: 430px;
+    }
+    
+    .chat-con{
+        margin-top: 10%;
+        clear: left;
+        overflow: auto;  
+    }
+   
+}

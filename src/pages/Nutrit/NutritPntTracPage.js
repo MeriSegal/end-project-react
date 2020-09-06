@@ -9,6 +9,7 @@ import MessageModel from '../../model/MessageModel';
 import TrackingView from '../../components/TrackingView';
 import FontAwesome from 'react-fontawesome';
 import WeightGraph from '../../components/WeightGraph';
+import './NutritPntTracPage.css';
 
 class NutritPntTracPage extends Component {
 
@@ -151,33 +152,43 @@ class NutritPntTracPage extends Component {
         )
 
         return (
-            <div>
+            <div className="trk-pnt-con">
                 <h1 className="form-title">Tracing {pntName}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Back to list 
                 <FontAwesome className="fas fa-level-up fa-10x"/> </Button>
-               
-                {trView}
-                
-                <div className="weight-graph">
-                    {trWeight}
-                </div>  
 
-                <BmiView className="bmi-view" userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
-                 
-                <Form className="chat-form">
-                    <Form.Group>                      
-                        <label htmlFor="Textarea"> Patient counseling:</label>
-                        <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
-                    </Form.Group>
+               <div className="gr-con col-lg-5"> 
 
-                    <Form.Group >
-                        <Button className="chat-btn" variant="primary" size="lg" onClick={this.sendMessage} block variant="success">Send Message </Button>
-                    </Form.Group>
-                </Form>
-                <ListGroup className="group">
-                      {messagesList}   
-                </ListGroup>
-                
+                    <div className="tr-con">    
+                        {trView}
+                    </div> 
+
+                    <div className="weight-graph">
+                        {trWeight}
+                    </div>  
+                    
+                </div>
+
+                <div className="bmi-view col-lg-5">
+                    <BmiView userName={pntName}  pntHeight={pntHeight} pntWeight={pntWeight} updateTime={weightUpdateTime} pntIsMale={pntIsMale}/>
+                </div>
+
+                <div className="chat-con">
+                    <Form className="chat-form">
+                        <Form.Group>                      
+                            <label htmlFor="Textarea"> Patient counseling:</label>
+                            <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Button className="chat-btn" variant="primary" size="lg" onClick={this.sendMessage} block variant="success">Send Message </Button>
+                        </Form.Group>
+                    </Form>
+
+                    <ListGroup className="group">
+                        {messagesList}   
+                    </ListGroup>
+                </div>
             </div>
         );
     }
