@@ -57,26 +57,26 @@ class LoginPage extends Component {
 
         return (
             <div>
-               <h1 className="from-title">Login</h1>
+               <h1 className="form-title">Login</h1>
                <p> or <a href="#/signup">create a new account</a> </p>
                 <Form className="fillScr">
                     {showInvalidCredentials ? <Alert variant="danger">
                         Invalid Credientails! Incorrect email or password
                     </Alert> : null}
                     <Form.Group as={Row} controlId="formHorizontalEmail">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Email:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="email" placeholder="Email" value={emailInput} onChange={(e) => this.setState({emailInput: e.target.value, showInvalidCredentials: false})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalPassword">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Password:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="password" placeholder="Password" value={pwdInput} onChange={(e) => this.setState({pwdInput: e.target.value, showInvalidCredentials: false})}/>
                         </Col>
                     </Form.Group>

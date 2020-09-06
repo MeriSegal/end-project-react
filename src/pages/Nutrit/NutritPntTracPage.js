@@ -152,7 +152,7 @@ class NutritPntTracPage extends Component {
 
         return (
             <div>
-                <h1>Tracing {pntName}</h1>
+                <h1 className="form-title">Tracing {pntName}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Back to list 
                 <FontAwesome className="fas fa-level-up fa-10x"/> </Button>
                

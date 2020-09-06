@@ -88,77 +88,77 @@ class PntSignUpPage extends Component {
        
         return (
             <div>
-                <h1 className="from-title">Sign Up</h1>
+                <h1 className="form-title">Sign Up</h1>
                 
                 <Form className="fillScr"> 
                     <Form.Group as={Row} controlId="formHorizontalText">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Name:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="text" placeholder="Name" value={fnameInput} onChange={(e) => this.setState({fnameInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalText">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Last Name:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="text" placeholder="Last name" value={lnameInput} onChange={(e) => this.setState({lnameInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalText">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Phone:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="text" placeholder="Phone" value={phoneInput} onChange={(e) => this.setState({phoneInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalEmail">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Email:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="email" placeholder="Email" value={emailInput} onChange={(e) => this.setState({emailInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalPassword">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Password:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="password" placeholder="Password" value={pwdInput} onChange={(e) => this.setState({pwdInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalDate">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Birthday:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="date" placeholder="Birthday" value={birthdayInput} onChange={(e) => this.setState({birthdayInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalNumbr">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Height:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="number" min="120" value={heightInput} onChange={(e) => this.setState({heightInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formHorizontalNumbr">
-                        <Form.Label column sm={2}>
+                        <Form.Label column sm={3}>
                             Weight:
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col sm={9}>
                             <Form.Control type="number" min="40" value={weightInput} onChange={(e) => this.setState({weightInput: e.target.value})}/>
                         </Col>
                     </Form.Group>

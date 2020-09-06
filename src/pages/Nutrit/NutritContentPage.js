@@ -65,12 +65,12 @@ class NutritContentPage extends Component {
             <div>
                 <NutritNavBar handleLogout={handleLogout} />
 
-               <h1 className="from-title">Add Content to the home Page</h1>
+               <h1 className="form-title">Add Content to the home Page</h1>
                 
                 <Form> 
                     <Form.Group as={Row} controlId="title">
                         <Form.Label column sm={2}>
-                            Title
+                            Title:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="text" placeholder="Title" value={titleInput} onChange={(e) => this.setState({titleInput: e.target.value})}/>
@@ -79,7 +79,7 @@ class NutritContentPage extends Component {
 
                     <Form.Group as={Row} controlId="sub">
                         <Form.Label column sm={2}>
-                            Sub Title
+                            Sub Title:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="text" placeholder="Sub Title" value={subTitleInput} onChange={(e) => this.setState({subTitleInput: e.target.value})}/>
@@ -88,7 +88,7 @@ class NutritContentPage extends Component {
 
                     <Form.Group as={Row} controlId="content">
                         <Form.Label column sm={2}>
-                            Content
+                            Content:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="text" placeholder="content" value={contentInput} onChange={(e) => this.setState({contentInput: e.target.value})}/>
@@ -97,7 +97,7 @@ class NutritContentPage extends Component {
 
                     <Form.Group as={Row} controlId="img">
                         <Form.Label column sm={2}>
-                            Image
+                            Image:
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control type="file" accept="image/*" onChange={this.handleFileChange} />

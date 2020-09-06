@@ -251,7 +251,7 @@ class PntTrackingPage extends Component {
         return (
             <div className="fillScr">
                 <PntNavBar handleLogout={handleLogout}/> 
-                <div className="page-title">
+                <div className="form-title">
                     <h1> date: {this.state.theDate}</h1>
                 </div>                
 
