@@ -63,7 +63,7 @@ class CarouselView extends Component {
                 <div className="item-title">
                     <br/>                   
                     <h3>Health Benefits of Fennel</h3>
-                    <p>According to the USDA National Nutrient Database for Standard Reference:</p>  
+                    <p>According to the USDA National Nutrient Database for Standard Reference</p>  
                 </div>
                 <Carousel.Caption>
                     <p>The health benefits of fennel are many and include relief from anemia, indigestion, flatulence, constipation, colic, diarrhea, respiratory disorders, and menstrual disorders. It also aids in eye care. Fennel, which has the scientific name Foeniculum vulgare miller, or its essence, is widely used around the world in mouth fresheners, toothpaste, desserts, antacids, and in various culinary applications.</p>                  

@@ -3,20 +3,19 @@
 .carousel-contaner{
     border: solid rgb(42, 38, 105);
     border-radius: 5px;
-    margin: 50px;
-    max-width: 750px;
+    margin: 5%;
     background-color: rgba(136, 196, 163, 0.822);
 }
 
 .item-title{
-    min-height: 150px;
+    min-height: 120px;
     color:rgb(42, 38, 105);
-    padding: 10px;
+    padding: 2%;
 }
 
 img{
     min-height: 400px;
-    max-height: 470px;
+    max-height: 450px;
  }
 
 .btn-con> .btn{
@@ -36,8 +35,8 @@ img{
 
 .title> h1{
     font-style: italic;
-    font-size: 80px;
-    padding: 20px;
+    font-size: 4em;
+    padding: 15px;
     text-shadow: 2px 2px 5px rgb(50, 112, 74);
 }
 
@@ -46,7 +45,10 @@ img{
     font-style: italic;
     color: rgb(42, 38, 105);
     text-shadow: 2px 2px 5px rgb(50, 112, 74);
+}
 
+.nutrit> h2{
+    font-size: 1.7em;
 }
 
 .carousel-caption{
@@ -64,11 +66,20 @@ img{
         padding-bottom: 0;
     }
 
+    .title> h1{
+        font-size: 5em;
+        padding: 20px;
+    }
+
     .nutrit{
         float: right;
         margin-left: 20%;
         margin-right: 10%;
         margin-top: 20px;
+    }
+
+    .nutrit> h2{
+        font-size:2em;
     }
 
     .btn-con{
@@ -89,4 +100,10 @@ img{
         overflow: auto; 
         margin-right: 10%;
     }
+
+    img{
+        min-height: 400px;
+        max-height: 410px;
+    }
+
 }
