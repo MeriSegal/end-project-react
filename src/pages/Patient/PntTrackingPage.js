@@ -23,6 +23,7 @@ class PntTrackingPage extends Component {
         this.state = {
             theDate: moment().format("DD-MM-YYYY"),
             food: "", 
+            calories: 0,
             eatTime: moment().format("h:mm a"),           
             foodInput: "",
             foodList: [],
@@ -51,7 +52,8 @@ class PntTrackingPage extends Component {
                 if (foods[0] !=undefined){
                     this.setState({
                         foodList: foods,
-                        food: foods[0].foodName
+                        food: foods[0].foodName,
+                        calories: foods[0].calories,
                     });
                 }
                 console.log('FoodDisplay found', results);
@@ -63,7 +65,7 @@ class PntTrackingPage extends Component {
 
     addTrkFood = () => {
 
-        const {food, eatTime, theDate} = this.state;
+        const {food, calories, eatTime, theDate} = this.state;
 
         const FoodTracking = Parse.Object.extend('FoodTracking');
         const myNewObject = new FoodTracking();
@@ -71,7 +73,7 @@ class PntTrackingPage extends Component {
         myNewObject.set('date', theDate);
         myNewObject.set('time', eatTime);
         myNewObject.set('foodName', food);
-        myNewObject.set('calories', 1);
+        myNewObject.set('calories', calories);
         myNewObject.set('pntId', Parse.User.current().id);
         myNewObject.set('userId', Parse.User.current());
 
@@ -190,8 +192,18 @@ class PntTrackingPage extends Component {
     }
 
     foodSelect = (event)=>{
+        const {foodList} = this.state;
+
+        let cal = 0;
+        for (let f in foodList){
+            if (foodList[f].foodName === event.target.value){
+               cal = Number(foodList[f].calories);
+            }
+        }
+
         this.setState(
-            {food : event.target.value}
+            {food : event.target.value,
+            calories : cal}
         )
     }
   
@@ -202,10 +214,9 @@ class PntTrackingPage extends Component {
     }
 
   
-
     render() {
         const {activeUser, handleLogout} = this.props;        
-        const {foodTracking, symptomTracking, foodInput, eatTime, food, symptomTime, symptom} = this.state;
+        const {foodTracking, symptomTracking, foodInput, eatTime, food, symptomTime, symptom, foodList, symptomList} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
@@ -220,6 +231,13 @@ class PntTrackingPage extends Component {
                         .sort((a, b) => a.time > b.time ? 1 : -1)
                         .map(food => <p>{food.time}: {food.foodName}</p>
         );
+
+        let dayCalory = 0; 
+        for (let food in foodTracking){
+            dayCalory += Number(foodTracking[food].calories)
+        }
+
+        console.log("dayCalory:"+dayCalory);        
 
         const mrSymptomTr = symptomTracking.filter(st => (st.time).includes("am"))
                         .sort((a, b) => a.time > b.time ? 1 : -1)
@@ -238,12 +256,12 @@ class PntTrackingPage extends Component {
                                 onChange={this.sympTimeChange} format={this.format} use24Hours inputReadOnly />
     
 
-        const foodOptions = this.state.foodList.filter(foods => (foods.foodName).toLowerCase()
+        const foodOptions = foodList.filter(foods => (foods.foodName).toLowerCase()
                                 .includes((this.state.foodInput).toLowerCase()))
                                 .map(foodfilter => <option value= {foodfilter.foods} >{foodfilter.foodName}</option>);
 
 
-        const symptomOptions = this.state.symptomList.filter(symptoms => (symptoms.symptomName).toLowerCase()
+        const symptomOptions = symptomList.filter(symptoms => (symptoms.symptomName).toLowerCase()
                                 .includes((this.state.symptomInput).toLowerCase()))
                                 .map(symptomfilter => <option value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
 
@@ -260,7 +278,9 @@ class PntTrackingPage extends Component {
                         <ListGroupItem className="eat-view">
                             <h5>Meals:</h5>
                             <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
-                            <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                            <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div> 
+                            <div className="calory"> <h6>Calories today:</h6> {dayCalory}</div>                             
+                            
                         </ListGroupItem>
                         <ListGroupItem className="symp-view">
                             <h5>Symptoms:</h5>

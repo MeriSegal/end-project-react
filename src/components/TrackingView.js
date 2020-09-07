@@ -82,13 +82,19 @@ class TrackingView extends Component {
                         .map(symp => <p>{symp.time}: {symp.symptom}</p>  
         );               
 
+        let dayCalory = 0; 
+        for (let food in foodTracking){
+            dayCalory += Number(foodTracking[food].calories)
+        }
+
         return (
             <div className="tr-view-con">
                 <ListGroup className="tr-view"> 
                     <ListGroupItem className="eat-view">
                         <h5>Meals:</h5>
                         <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
-                        <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                        <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>  
+                        <div className="calory"> <h6>Calories today:</h6> {dayCalory}</div>                           
                     </ListGroupItem>
                     <ListGroupItem className="symp-view">
                         <h5>Symptoms:</h5>
