@@ -94,7 +94,7 @@ class TrackingView extends Component {
                         <h5>Meals:</h5>
                         <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
                         <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>  
-                        <div className="calory"> <h6>Calories today:</h6> {dayCalory}</div>                           
+                        <div className="calory"> <h6>Calories today: {dayCalory.toFixed(2)}</h6> </div>                           
                     </ListGroupItem>
                     <ListGroupItem className="symp-view">
                         <h5>Symptoms:</h5>

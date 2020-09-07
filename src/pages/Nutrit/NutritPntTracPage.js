@@ -129,9 +129,6 @@ class NutritPntTracPage extends Component {
 
     
 
-
-
-
     render() {
         const {pntName, pntId, pntHeight, pntWeight, weightUpdateTime, pntIsMale, messageInput, messageList} = this.state;
 
