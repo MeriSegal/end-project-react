@@ -83,7 +83,7 @@ class TrackingView extends Component {
         );               
 
         return (
-            <ListGroup className="tr-view col-lg-5 col-sm-11"> 
+            <ListGroup className="tr-view"> 
                 <ListGroupItem className="eat-view">
                     <h5>Meals:</h5>
                     <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
