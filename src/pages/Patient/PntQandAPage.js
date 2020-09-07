@@ -88,7 +88,7 @@ class PntQandAPage extends Component {
                 <Form className="chat-form">
                     <Form.Group>                      
                         <label htmlFor="Textarea"> Ask Nutrit:</label>
-                        <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
+                        <Form.Textarea id="Textarea" rows="3" maxlength="250" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
                     </Form.Group>
 
                     <Form.Group >

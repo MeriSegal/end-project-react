@@ -152,7 +152,7 @@ class NutritPntTracPage extends Component {
 
         return (
             <div className="trk-pnt-con">
-                <h1 className="form-title">Tracing {pntName}</h1>
+                <h1 className="form-title">Tracking {pntName}</h1>
                 <Button variant="primary" size="lg" onClick={()=>this.setState({pntId: -1})} variant="success">Back to list 
                 <FontAwesome className="fas fa-level-up fa-10x"/> </Button>
 
@@ -176,7 +176,7 @@ class NutritPntTracPage extends Component {
                     <Form className="chat-form">
                         <Form.Group>                      
                             <label htmlFor="Textarea"> Patient counseling:</label>
-                            <Form.Textarea id="Textarea" rows="3" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
+                            <Form.Textarea id="Textarea" rows="3" maxlength="250" type="text" value={messageInput} onChange={(e) => this.setState({messageInput: e.target.value})}></Form.Textarea>
                         </Form.Group>
 
                         <Form.Group >

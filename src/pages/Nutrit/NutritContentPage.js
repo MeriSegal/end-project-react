@@ -13,7 +13,8 @@ class NutritContentPage extends Component {
             titleInput: "",
             subTitleInput: "",
             contentInput: "",
-            imgInput: null
+            imgInput: null,
+            goHome: false
         }    
     }
 
@@ -30,6 +31,9 @@ class NutritContentPage extends Component {
 
         myNewObject.save().then(
         (result) => {
+            this.setState({
+                goHome: true
+            });
             console.log('HomeContent created', result);
         },
         (error) => {
@@ -53,9 +57,9 @@ class NutritContentPage extends Component {
 
     render() {
         const { activeUser, handleLogout } = this.props;
-        const { titleInput, subTitleInput, contentInput, imgInput } = this.state;
+        const { titleInput, subTitleInput, contentInput, imgInput, goHome } = this.state;
 
-        if (!activeUser) {
+        if (!activeUser || goHome) {
             return <Redirect to="/" />
         }
 
@@ -73,7 +77,7 @@ class NutritContentPage extends Component {
                             Title:
                         </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" placeholder="Title" value={titleInput} onChange={(e) => this.setState({titleInput: e.target.value})}/>
+                            <Form.Control type="text" maxlength="30" placeholder="Title (Up to 30 letters)" value={titleInput} onChange={(e) => this.setState({titleInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
@@ -82,7 +86,7 @@ class NutritContentPage extends Component {
                             Sub Title:
                         </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" placeholder="Sub Title" value={subTitleInput} onChange={(e) => this.setState({subTitleInput: e.target.value})}/>
+                            <Form.Control type="text" maxlength="100" placeholder="Sub Title (Up to 100 letters)" value={subTitleInput} onChange={(e) => this.setState({subTitleInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
@@ -91,7 +95,7 @@ class NutritContentPage extends Component {
                             Content:
                         </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" placeholder="content" value={contentInput} onChange={(e) => this.setState({contentInput: e.target.value})}/>
+                            <Form.Control type="text" maxlength="380" placeholder="content (Up to 380 letters)" value={contentInput} onChange={(e) => this.setState({contentInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 
