@@ -223,12 +223,12 @@ class PntTrackingPage extends Component {
         }
               
         const mrFoodTr = foodTracking.filter(eat => (eat.time).includes("am"))
-                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
                         .map(food => <p>{food.time}: {food.foodName}</p>
         );
                
         const noonFoodTr = foodTracking.filter(eat => (eat.time).includes("pm"))
-                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
                         .map(food => <p>{food.time}: {food.foodName}</p>
         );
 
@@ -240,12 +240,12 @@ class PntTrackingPage extends Component {
         console.log("dayCalory:"+dayCalory);        
 
         const mrSymptomTr = symptomTracking.filter(st => (st.time).includes("am"))
-                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
                         .map(symp => <p>{symp.time}: {symp.symptom}</p>                     
         );  
 
         const noonSymptomTr = symptomTracking.filter(st => (st.time).includes("pm"))
-                        .sort((a, b) => a.time > b.time ? 1 : -1)
+                        .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
                         .map(symp => <p>{symp.time}: {symp.symptom}</p>  
         ); 
 
