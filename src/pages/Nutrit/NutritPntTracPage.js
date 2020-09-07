@@ -88,10 +88,27 @@ class NutritPntTracPage extends Component {
                 messageInput: ""
             })
             this.readMessages()
-            this.updateMsgStatus()
         },
         (error) => {
             console.error('Error while creating Message: ', error);
+        });
+    }
+
+    readMessages = () =>{
+        const {pntId} = this.state;
+
+        const Message = Parse.Object.extend('Message');
+        const query = new Parse.Query(Message);
+        query.equalTo("pntId", pntId+"");
+        query.find().then(results => {    
+            const messages = results.map(result => new MessageModel(result))    
+            this.setState({
+                messageList: messages
+            });
+            this.updateMsgStatus()
+            console.log('Message found', results);
+        }, (error) => {
+            console.error('Error while fetching Message', error);
         });
     }
 
@@ -110,22 +127,7 @@ class NutritPntTracPage extends Component {
           }))
     }
 
-    readMessages = () =>{
-            const {pntId} = this.state;
-
-            const Message = Parse.Object.extend('Message');
-            const query = new Parse.Query(Message);
-            query.equalTo("pntId", pntId+"");
-            query.find().then(results => {    
-                const messages = results.map(result => new MessageModel(result))    
-                this.setState({
-                    messageList: messages
-                });
-                console.log('Message found', results);
-            }, (error) => {
-                console.error('Error while fetching Message', error);
-            });
-    }
+    
 
 
 
