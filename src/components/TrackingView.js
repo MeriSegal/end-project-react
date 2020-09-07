@@ -83,18 +83,21 @@ class TrackingView extends Component {
         );               
 
         return (
-            <ListGroup className="tr-view"> 
-                <ListGroupItem className="eat-view">
-                    <h5>Meals:</h5>
-                    <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
-                    <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
-                </ListGroupItem>
-                <ListGroupItem className="symp-view">
-                    <h5>Symptoms:</h5>
-                    <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
-                    <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
-                </ListGroupItem>               
-            </ListGroup>
+            <div className="tr-view-con">
+                <ListGroup className="tr-view"> 
+                    <ListGroupItem className="eat-view">
+                        <h5>Meals:</h5>
+                        <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
+                        <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                    </ListGroupItem>
+                    <ListGroupItem className="symp-view">
+                        <h5>Symptoms:</h5>
+                        <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
+                        <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
+                    </ListGroupItem>               
+                </ListGroup>
+            </div>
+
         );
     }
 }

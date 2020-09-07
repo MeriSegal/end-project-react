@@ -43,11 +43,14 @@ select{
     background-color: rgb(80, 136, 136);
 }
 
+.tr-view-con> .list-group{
+    flex-direction: row;
+}
+
 .tr-view{  
-    margin: 10px;
     display: table;
     font-size: 0.6em;
-
+    margin: 10px;
 }
 
 .tr-view> .eat-view, .tr-view> .symp-view {
@@ -63,7 +66,7 @@ select{
     margin: 0px;
 }
 
-.mrn,.eve{
+.mrn, .eve{
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 10px;

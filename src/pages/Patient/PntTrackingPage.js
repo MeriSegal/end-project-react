@@ -255,18 +255,20 @@ class PntTrackingPage extends Component {
                     <h1> date: {this.state.theDate}</h1>
                 </div>                
 
-                <ListGroup className="tr-view col-lg-5"> 
-                    <ListGroupItem className="eat-view">
-                        <h5>Meals:</h5>
-                        <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
-                        <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
-                    </ListGroupItem>
-                    <ListGroupItem className="symp-view">
-                        <h5>Symptoms:</h5>
-                        <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
-                        <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
-                    </ListGroupItem>               
-                </ListGroup>
+                <div className="tr-view-con">              
+                    <ListGroup className="tr-view col-lg-5"> 
+                        <ListGroupItem className="eat-view">
+                            <h5>Meals:</h5>
+                            <div className="mrn"> <h6>Morning:</h6> {mrFoodTr}</div>
+                            <div className="eve"> <h6>Afternoon:</h6> {noonFoodTr}</div>                             
+                        </ListGroupItem>
+                        <ListGroupItem className="symp-view">
+                            <h5>Symptoms:</h5>
+                            <div className="mrn"> <h6>Morning:</h6> {mrSymptomTr}</div>
+                            <div className="eve"> <h6>Afternoon:</h6> {noonSymptomTr}</div>
+                        </ListGroupItem>               
+                    </ListGroup>
+                </div>
 
                 <div className="selector-con col-lg-5 col-sm-11">
                     <div className="eat-con">              
