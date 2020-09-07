@@ -61,7 +61,7 @@ class LoginPage extends Component {
                <p> or <a href="#/signup">create a new account</a> </p>
                 <Form className="fillScr">
                     {showInvalidCredentials ? <Alert variant="danger">
-                        Invalid Credientails! Incorrect email or password
+                        Invalid Credentials! Incorrect email or password
                     </Alert> : null}
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={3}>

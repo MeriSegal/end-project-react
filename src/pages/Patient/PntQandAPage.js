@@ -52,7 +52,7 @@ class PntQandAPage extends Component {
         const query = new Parse.Query(Message);
         query.equalTo("pntId", Parse.User.current().id);      
         query.find().then(results => {    
-            const messages = results.map(result => new MessageModel(result))    
+            const messages = results.reverse().map(result => new MessageModel(result))    
             this.setState({
                 messageList: messages
             });
@@ -75,7 +75,7 @@ class PntQandAPage extends Component {
             return <Redirect to="/" />
         }
 
-        const messagesList = messageList.reverse().map(msg => 
+        const messagesList = messageList.map(msg => 
             <ListGroup.Item className={msg.isNutrit? "list-item-ans":"list-item-ask"}>
                {msg.date}:  {msg.time}: {msg.content}
             </ListGroup.Item>

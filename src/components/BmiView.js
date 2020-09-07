@@ -79,11 +79,11 @@ class BmiView extends Component {
                     <Card.Title> {userName} BMI : {bmi}</Card.Title>
                     <Card.Text>
                     <br/>
-                    Heigt: {pntHeight}
+                    Height: {pntHeight}
                     <br/>
-                    Corent Weight: {pntWeight}
+                    Current Weight: {pntWeight}
                     <br/>
-                    updated on: {updateTime}
+                    Updated on: {updateTime}
                     </Card.Text>
                 </Card.Body>
                 <Table>

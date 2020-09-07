@@ -292,7 +292,7 @@ class PntTrackingPage extends Component {
 
                 <div className="selector-con col-lg-5 col-sm-11">
                     <div className="eat-con">              
-                        <h3>when did you eat? </h3>
+                        <h3>When did you eat? </h3>
                             {eatTimePicker} 
                         <Form.Control type="text" placeholder="Search and select from the list:" value={foodInput} onChange={this.changeFood}/>
                         
@@ -304,7 +304,7 @@ class PntTrackingPage extends Component {
                     </div>
 
                     <div className="symp-con">
-                        <h3>when did you feel symptom? </h3>
+                        <h3>When did you feel symptom? </h3>
                             {sympTimePicker}
                         <Form.Control type='text' onChange={(e)=> this.setState({symptomInput: e.target.value})} />
                         <select onClick={this.symptomSelect}>
