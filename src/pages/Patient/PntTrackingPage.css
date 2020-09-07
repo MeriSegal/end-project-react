@@ -47,7 +47,7 @@ select{
 .tr-view> .eat-view, .tr-view> .symp-view {
     display: table-cell;
     text-align: left;
-    width: 50%;
+    width: 44%;
     background:  rgba(136, 196, 163, 0.822);
     border-radius: 10px;
 }
@@ -74,12 +74,10 @@ select{
 @media screen and (min-width: 901px) {
 
     .selector-con{
-        display: inline-block; 
         float: right; 
     }
 
     .tr-view{  
-        display: inline-block; 
         float: left;
         margin-left: 15%; 
     }

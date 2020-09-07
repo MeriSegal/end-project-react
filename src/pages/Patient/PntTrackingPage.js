@@ -268,7 +268,7 @@ class PntTrackingPage extends Component {
                     </ListGroupItem>               
                 </ListGroup>
 
-                <div className="selector-con col-lg-5">
+                <div className="selector-con col-lg-5 col-sm-11">
                     <div className="eat-con">              
                         <h3>when did you eat? </h3>
                             {eatTimePicker} 
