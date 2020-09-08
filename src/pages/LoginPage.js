@@ -68,7 +68,7 @@ class LoginPage extends Component {
                             Email:
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="email" placeholder="Email" value={emailInput} onChange={(e) => this.setState({emailInput: e.target.value, showInvalidCredentials: false})}/>
+                            <Form.Control type="email" maxlength="250" placeholder="Email" value={emailInput} onChange={(e) => this.setState({emailInput: e.target.value, showInvalidCredentials: false})}/>
                         </Col>
                     </Form.Group>
 
@@ -77,7 +77,7 @@ class LoginPage extends Component {
                             Password:
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="password" placeholder="Password" value={pwdInput} onChange={(e) => this.setState({pwdInput: e.target.value, showInvalidCredentials: false})}/>
+                            <Form.Control type="password" maxlength="250" placeholder="Password" value={pwdInput} onChange={(e) => this.setState({pwdInput: e.target.value, showInvalidCredentials: false})}/>
                         </Col>
                     </Form.Group>
 
