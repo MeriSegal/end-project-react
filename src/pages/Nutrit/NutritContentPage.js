@@ -21,25 +21,29 @@ class NutritContentPage extends Component {
     addNewContent = () =>{
         const { titleInput, subTitleInput, contentInput, imgInput } = this.state;
 
-        const HomeContent = Parse.Object.extend('HomeContent');
-        const myNewObject = new HomeContent();
+        if (titleInput!=="" && subTitleInput!=="" && contentInput!=="" && imgInput!==null){
+            const HomeContent = Parse.Object.extend('HomeContent');
+            const myNewObject = new HomeContent();
 
-        myNewObject.set('title', titleInput);
-        myNewObject.set('subTitle', subTitleInput);
-        myNewObject.set('content', contentInput);
-        myNewObject.set('image', new Parse.File(imgInput.name, imgInput));
+            myNewObject.set('title', titleInput);
+            myNewObject.set('subTitle', subTitleInput);
+            myNewObject.set('content', contentInput);
+            myNewObject.set('image', new Parse.File(imgInput.name, imgInput));
 
-        myNewObject.save().then(
-        (result) => {
-            this.setState({
-                goHome: true
-            });
-            console.log('HomeContent created', result);
-        },
-        (error) => {
-            console.error('Error while creating HomeContent: ', error);
+            myNewObject.save().then(
+            (result) => {
+                this.setState({
+                    goHome: true
+                });
+                console.log('HomeContent created', result);
+            },
+            (error) => {
+                console.error('Error while creating HomeContent: ', error);
+            }
+            );
+        }else{
+            alert("Empty content");
         }
-        );
     }
 
     handleFileChange = (event) => {
@@ -95,7 +99,7 @@ class NutritContentPage extends Component {
                             Content:
                         </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" maxlength="380" placeholder="content (Up to 380 letters)" value={contentInput} onChange={(e) => this.setState({contentInput: e.target.value})}/>
+                            <Form.Control as="textarea" rows="3" type="text" maxlength="380" placeholder="content (Up to 380 letters)" value={contentInput} onChange={(e) => this.setState({contentInput: e.target.value})}/>
                         </Col>
                     </Form.Group>
 

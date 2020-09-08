@@ -65,8 +65,8 @@ class BmiView extends Component {
                             {bmi: "severe Obesity", male: "< 40", female: "< 40"}]
 
 
-        const tableRows = bmiDetails.map(detail => 
-                                            <tr className={detail.bmi === this.bmiRange() ? "bg-this" : ""}>
+        const tableRows = bmiDetails.map((detail, index) => 
+                                            <tr key={index} className={detail.bmi === this.bmiRange() ? "bg-this" : ""}>
                                                 <td>{detail.bmi}</td>
                                                 <td>{detail.male}</td>
                                                 <td>{detail.female}</td>

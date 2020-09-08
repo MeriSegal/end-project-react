@@ -72,8 +72,8 @@ class NutritPntListPage extends Component {
         }
 
 
-        const pnts = pntList.map(pnt => 
-            <ListGroup.Item className="list-item" action value={pnt.fname+" "+pnt.lname} onClick={this.viewPnt}>
+        const pnts = pntList.map((pnt, index) => 
+            <ListGroup.Item key={index} className="list-item" action value={pnt.fname+" "+pnt.lname} onClick={this.viewPnt}>
                 <Badge className="name-bdg"> <h4> {pnt.fname} {pnt.lname}</h4> </Badge>   phone: {pnt.phone}   &gt;&gt;
                 <Badge className="babble"> <h5>{pnt.message===0? "":pnt.message +" new messages"} </h5></Badge>
             </ListGroup.Item>

@@ -38,7 +38,7 @@ class PntQandAPage extends Component {
             this.setState({
                 messageInput: ""
             })
-            this.showMesages();
+            this.showMesages()
         },
         (error) => {
             console.error('Error while creating Message: ', error);
@@ -75,8 +75,8 @@ class PntQandAPage extends Component {
             return <Redirect to="/" />
         }
 
-        const messagesList = messageList.map(msg => 
-            <ListGroup.Item className={msg.isNutrit? "list-item-ans":"list-item-ask"}>
+        const messagesList = messageList.map((msg, index) => 
+            <ListGroup.Item key={index} className={msg.isNutrit? "list-item-ans":"list-item-ask"}>
                {msg.date}:  {msg.time}: {msg.content}
             </ListGroup.Item>
         )
