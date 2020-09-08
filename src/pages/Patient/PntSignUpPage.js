@@ -91,6 +91,10 @@ class PntSignUpPage extends Component {
                 handleLogin(new UserModel(user));
                 this.updateWeight();           
             }).catch(error => {
+                this.setState({
+                    showInvalidCredentials: true,
+                    alertMsg: "Email exists or Invalid session token"
+                }) 
                 console.error('Error while signing up user', error);
             });
         }
