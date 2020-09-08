@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PntNavBar from '../../components/PntNavBar';
 import { Redirect } from 'react-router-dom';
 import BmiView from '../../components/BmiView';
-import { Form , Col, Row, Button } from 'react-bootstrap';
+import { Form , Col, Row, Button, Alert } from 'react-bootstrap';
 import './PntBmiPage.css';
 import Parse from 'parse';
 import moment from 'moment';
@@ -17,7 +17,8 @@ class PntBmiPage extends Component {
         this.state = {
             weightInput: this.props.activeUser.weight,
             updateTime: "",
-            graphUpdate: []
+            graphUpdate: [],
+            showInvalidCredentials: false
         }    
     }
 
@@ -40,41 +41,52 @@ class PntBmiPage extends Component {
     updateWeight = () =>{
         const {weightInput} = this.state;
 
-        const User = new Parse.User();
-        const query = new Parse.Query(User);
-        
-        // Finds the user by its ID
-        query.get(Parse.User.current().id).then((user) => {
-          // Updates the data we want      
-          user.set('weight', Number( weightInput));        
-          // Saves the user with the updated data
-          user.save().then((response) => {
-            console.log('Updated user', response);
-          }).catch((error) => {
-            console.error('Error while updating user', error);
-          });
-        });
+        if (parseFloat(weightInput)<300 && parseFloat(weightInput)>30){   
+            
+            this.setState({
+                showInvalidCredentials: false
+            }) 
 
-        const WeightTracking = Parse.Object.extend('WeightTracking');
-        const myNewObject = new WeightTracking();
-        
-        myNewObject.set('UserId', Parse.User.current());
-        myNewObject.set('pntId', Parse.User.current().id+"");
-        myNewObject.set('date',  moment().format("DD-MM-YYYY"));
-        myNewObject.set('weight', weightInput);
-        
-        myNewObject.save().then(
-            (result) => {
-                this.setState({
-                    updateTime: moment().format("DD-MM-YYYY")
-                }) 
-                this.updateGraph() 
-            console.log('WeightTracking created', result);
-            },
-            (error) => {
-            console.error('Error while creating WeightTracking: ', error);
-            }
-        );
+            const User = new Parse.User();
+            const query = new Parse.Query(User);
+            
+            // Finds the user by its ID
+            query.get(Parse.User.current().id).then((user) => {
+            // Updates the data we want      
+            user.set('weight', Number(parseFloat(weightInput).toFixed(2)));        
+            // Saves the user with the updated data
+                user.save().then((response) => {
+                    console.log('Updated user', response);
+                }).catch((error) => {
+                console.error('Error while updating user', error);
+                });
+            });
+
+            const WeightTracking = Parse.Object.extend('WeightTracking');
+            const myNewObject = new WeightTracking();
+            
+            myNewObject.set('UserId', Parse.User.current());
+            myNewObject.set('pntId', Parse.User.current().id+"");
+            myNewObject.set('date',  moment().format("DD-MM-YYYY"));
+            myNewObject.set('weight', Number(weightInput).toFixed(2)+"");
+            
+            myNewObject.save().then(
+                (result) => {
+                    this.setState({
+                        updateTime: moment().format("DD-MM-YYYY")
+                    }) 
+                    this.updateGraph() 
+                console.log('WeightTracking created', result);
+                },
+                (error) => {
+                console.error('Error while creating WeightTracking: ', error);
+                }
+            );
+        }else{
+            this.setState({
+                showInvalidCredentials: true
+            }) 
+        }
     }
 
     updateGraph = () =>{
@@ -94,7 +106,7 @@ class PntBmiPage extends Component {
 
     render() {
         const { activeUser, handleLogout } = this.props;
-        const {updateTime, weightInput, graphUpdate} = this.state;
+        const {updateTime, weightInput, graphUpdate, showInvalidCredentials} = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
@@ -133,7 +145,7 @@ class PntBmiPage extends Component {
                                 Weight:
                                 </Form.Label>
                                 <Col sm={8}>
-                                    <Form.Control type="number" min="40" step="0.1" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
+                                    <Form.Control type="number" min="40" max="300" step="0.1" value={weightInput} placeholder={activeUser.weight} onChange={(e) => this.setState({weightInput: e.target.value})}/>
                                 </Col>
                             </Form.Group>
 
@@ -141,7 +153,9 @@ class PntBmiPage extends Component {
                                 <Button variant="primary" size="lg" onClick={this.updateWeight} block variant="success">Update Weight </Button>
                             </Form.Group>
                     </Form>
-
+                    {showInvalidCredentials ? <Alert variant="danger">
+                        Invalid Credentials! Weight is impossible!
+                    </Alert> : null}
                     <div className="weight-graph">
                             <Line data={data} />
                     </div>
