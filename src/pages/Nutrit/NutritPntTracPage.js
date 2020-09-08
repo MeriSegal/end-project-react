@@ -87,11 +87,27 @@ class NutritPntTracPage extends Component {
             this.setState({
                 messageInput: ""
             })
-            this.readMessages()
+            this.updateMsgStatus()
         },
         (error) => {
             console.error('Error while creating Message: ', error);
         });
+    }
+
+    updateMsgStatus = () =>{
+
+        const {messageList} = this.state;
+        const Message = Parse.Object.extend('Message')
+        messageList.map(msg =>
+            new Parse.Query(Message).get(msg.id).then((object) => {          
+            object.set('isRead', true);           
+            object.save().then((response) => {  
+                this.readMessages()            
+              console.log('Updated Message', response);
+            }, (error) => {
+              console.error('Error while updating Message', error);
+            });
+          }))
     }
 
     readMessages = () =>{
@@ -105,30 +121,13 @@ class NutritPntTracPage extends Component {
             this.setState({
                 messageList: messages
             });
-            this.updateMsgStatus()
             console.log('Message found', results);
         }, (error) => {
             console.error('Error while fetching Message', error);
         });
     }
 
-    updateMsgStatus = () =>{
-
-        const {messageList} = this.state;
-        const Message = Parse.Object.extend('Message')
-        messageList.map(msg =>
-            new Parse.Query(Message).get(msg.id).then((object) => {          
-            object.set('isRead', true);           
-            object.save().then((response) => {              
-              console.log('Updated Message', response);
-            }, (error) => {
-              console.error('Error while updating Message', error);
-            });
-          }))
-    }
-
     
-
     render() {
         const {pntName, pntId, pntHeight, pntWeight, weightUpdateTime, pntIsMale, messageInput, messageList} = this.state;
 

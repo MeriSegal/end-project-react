@@ -38,7 +38,7 @@ class PntQandAPage extends Component {
             this.setState({
                 messageInput: ""
             })
-            this.showMesages()
+            this.showMesages();
         },
         (error) => {
             console.error('Error while creating Message: ', error);
