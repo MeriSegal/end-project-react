@@ -21,7 +21,7 @@ class PntQandAPage extends Component {
 
 
     sendMessage = () =>{
-        const {messageInput} = this.state;
+        const {messageInput, messageList} = this.state;
 
         const Message = Parse.Object.extend('Message');
         const myNewObject = new Message();
@@ -36,9 +36,9 @@ class PntQandAPage extends Component {
 
         myNewObject.save().then( result => {
             this.setState({
-                messageInput: ""
+                messageInput: "",
+                messageList: [...messageList, new MessageModel(result)]
             })
-            this.showMesages()
         },
         (error) => {
             console.error('Error while creating Message: ', error);
@@ -52,7 +52,7 @@ class PntQandAPage extends Component {
         const query = new Parse.Query(Message);
         query.equalTo("pntId", Parse.User.current().id);      
         query.find().then(results => {    
-            const messages = results.reverse().map(result => new MessageModel(result))    
+            const messages = results.map(result => new MessageModel(result))    
             this.setState({
                 messageList: messages
             });
@@ -75,7 +75,7 @@ class PntQandAPage extends Component {
             return <Redirect to="/" />
         }
 
-        const messagesList = messageList.map((msg, index) => 
+        const messagesList = messageList.reverse().map((msg, index) => 
             <ListGroup.Item key={index} className={msg.isNutrit? "list-item-ans":"list-item-ask"}>
                {msg.date}:  {msg.time}: {msg.content}
             </ListGroup.Item>
