@@ -224,12 +224,12 @@ class PntTrackingPage extends Component {
               
         const mrFoodTr = foodTracking.filter(eat => (eat.time).includes("am"))
                         .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
-                        .map(food => <p>{food.time}: {food.foodName}</p>
+                        .map((food, index)  => <p key={index}>{food.time}: {food.foodName}</p>
         );
                
         const noonFoodTr = foodTracking.filter(eat => (eat.time).includes("pm"))
                         .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
-                        .map(food => <p>{food.time}: {food.foodName}</p>
+                        .map((food, index) => <p key={index}>{food.time}: {food.foodName}</p>
         );
 
         let dayCalory = 0; 
@@ -241,12 +241,12 @@ class PntTrackingPage extends Component {
 
         const mrSymptomTr = symptomTracking.filter(st => (st.time).includes("am"))
                         .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
-                        .map(symp => <p>{symp.time}: {symp.symptom}</p>                     
+                        .map((symp, index) => <p key={index}>{symp.time}: {symp.symptom}</p>                     
         );  
 
         const noonSymptomTr = symptomTracking.filter(st => (st.time).includes("pm"))
                         .sort((a, b) => new Date("1984/01/01 "+a.time) > new Date("1984/01/01 "+b.time) ? 1 : -1)
-                        .map(symp => <p>{symp.time}: {symp.symptom}</p>  
+                        .map((symp, index) => <p key={index}>{symp.time}: {symp.symptom}</p>  
         ); 
 
         const eatTimePicker = <TimePicker showSecond={false} defaultValue={moment()} className="t-pick"
@@ -258,12 +258,12 @@ class PntTrackingPage extends Component {
 
         const foodOptions = foodList.filter(foods => (foods.foodName).toLowerCase()
                                 .includes((this.state.foodInput).toLowerCase()))
-                                .map(foodfilter => <option value= {foodfilter.foods} >{foodfilter.foodName}</option>);
+                                .map((foodfilter, index) => <option key={index} value= {foodfilter.foods} >{foodfilter.foodName}</option>);
 
 
         const symptomOptions = symptomList.filter(symptoms => (symptoms.symptomName).toLowerCase()
                                 .includes((this.state.symptomInput).toLowerCase()))
-                                .map(symptomfilter => <option value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
+                                .map((symptomfilter, index) => <option key={index} value= {symptomfilter.symptoms} >{symptomfilter.symptomName}</option>);
 
 
         return (
